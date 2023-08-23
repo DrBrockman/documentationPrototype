@@ -1,26 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head></head>
-<div class="container mt-5">
-    <h2>Medical Note Form</h2>
-    <form>
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>New note</title>
+        <style>
+            form.yeet label {
+                background-color: transparent;
+            }
+            form.yeet .form-group {
+                position: relative;
+                margin-bottom: 2rem;
+            }
+    
+            form.yeet .form-control {
+                padding-top: 1.5rem;
+            }
+    
+            form.yeet .form-control:focus + .placeholder {
+                transform: translateY(-100%);
+                font-size: 0.75rem;
+            }
+    
+            form.yeet .placeholder {
+                position: absolute;
+                top: 1rem;
+                left: 0.75rem;
+                pointer-events: none;
+                transition: all 0.2s ease-out;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h2>Patient</h2>
+            <form class="yeet">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="name" name="name">
+                    <label class="placeholder" for="name">Name</label>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" id="subjective" name="subjective" rows="4"></textarea>
+                    <label class="placeholder" for="subjective">Subjective</label>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" id="assessment" name="assessment" rows="4"></textarea>
+                    <label class="placeholder" for="assessment">Assessment</label>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" id="plan" name="plan" rows="4"></textarea>
+                    <label class="placeholder" for="plan">Plan</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="subjective">Subjective:</label>
-            <textarea class="form-control" id="subjective" name="subjective" rows="4" placeholder="Enter Subjective"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="assessment">Assessment:</label>
-            <textarea class="form-control" id="assessment" name="assessment" rows="4" placeholder="Enter Assessment"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="plan">Plan:</label>
-            <textarea class="form-control" id="plan" name="plan" rows="4" placeholder="Enter Plan"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
+    </body>
 </html>

@@ -282,25 +282,55 @@ $(".exerciseList").on("click", function(event) {
       checkbox.prop("checked", !checkbox.prop("checked"));
     }
   });
+  
 
-  async function getDataFromGoogleAppsScript() {
-  const url =   'https://script.google.com/macros/s/AKfycbzflBsNhczAFVFmNjsSVVjWoKGSDGdS8lGW55U2flyAO1ONczCIMcELBMKfhRqFnCoHSw/exec'
-
+async function getDataAndPopulateTable() {
+  const url = 'https://script.google.com/macros/s/AKfycbxqBB1SPDUV3Cd-3_NuHvSUxIckB4wFvu0lQwFa0msXEdS5039BQ_yqI1HzKHCdne-hgA/exec';
 
   try {
     const response = await fetch(url);
     const data = await response.json();
-    
-    console.log(data);
+
+    // Get the tbody element by its class name
+    const tbody = document.querySelector('.bod');
+
+    // Clear existing rows from tbody
+    tbody.innerHTML = '';
+
+    // Loop through the data and create rows
+    data.exercises.forEach(item => {
+      const tr = document.createElement('tr');
+      tr.classList.add('exerciseList');
+      tr.dataset.category = item.category; // Replace with the appropriate property name
+
+      tr.innerHTML = `
+        <td>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input">
+          </div>
+        </td>
+        <td>${item.name}</td>
+        <td class="text-right">
+          <span>
+            <em class="fa fa-edit mr-2"></em>
+            <em class="fa fa-trash"></em>
+          </span>
+        </td>
+      `;
+
+      // Append the created row to the tbody
+      tbody.appendChild(tr);
+    });
   } catch (error) {
     console.error('Error fetching data:', error);
   }
 }
 
-getDataFromGoogleAppsScript();
+getDataAndPopulateTable();
 
-const eventSource = new EventSource(url);
+var theurl = 'https://script.google.com/macros/s/AKfycbxqBB1SPDUV3Cd-3_NuHvSUxIckB4wFvu0lQwFa0msXEdS5039BQ_yqI1HzKHCdne-hgA/exec';
 
+const eventSource = new EventSource(theurl);
 eventSource.onmessage = (event) => {
   const data = JSON.parse(event.data);
   console.log('Received updated data:', data);
@@ -309,8 +339,6 @@ eventSource.onmessage = (event) => {
 eventSource.onerror = (error) => {
   console.error('SSE Error:', error);
 };
-
-
 
 
 });

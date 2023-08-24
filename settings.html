@@ -1,5 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
-<head></head>
-    <p> settings</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+       
+      </style>
+</head>
+<body>
+
+    <div class="container mt-5">
+      <h1>Person List</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Start</th>
+            <th>End</th>
+          </tr>
+        </thead>
+        <tbody id="personTableBody">
+          <!-- JavaScript will populate rows here -->
+        </tbody>
+      </table>
+    </div>
+    
+   <!-- Modal for editing person details -->
+   <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Person Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="editForm">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" name="name">
+            </div>
+            <div class="form-group">
+              <label for="subjective">Subjective</label>
+              <textarea class="form-control" id="subjective" name="subjective"></textarea>
+            </div>
+            <div class="accordion" id="accordionSections">
+                <div class="card">
+                  <div class="card-header" id="headingOne">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" aria-expanded="false" aria-controls="collapseOne">
+                        Section One
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSections">
+                    <div class="card-body">
+                      <label for="soft">Soft</label>
+                      <input type="text" class="form-control" id="soft" name="soft">
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingTwo">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" aria-expanded="false" aria-controls="collapseTwo">
+                        Section Two
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSections">
+                    <div class="card-body">
+                      <label for="dryn">Dryn</label>
+                      <input type="text" class="form-control" id="dryn" name="dryn">
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingThree">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" aria-expanded="false" aria-controls="collapseThree">
+                        Section Three
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSections">
+                    <div class="card-body">
+                      <label for="mobbin">Mobbin</label>
+                      <input type="text" class="form-control" id="mobbin" name="mobbin">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            <div class="form-group">
+              <label for="assessment">Assessment</label>
+              <textarea class="form-control" id="assessment" name="assessment"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="plan">Plan</label>
+              <textarea class="form-control" id="plan" name="plan"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="saveChanges">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+   
+    <script>
+        
+      // Sample array of person objects
+      const people = [
+  {
+    name: "John Doe",
+    date: "2023-08-23",
+    start: "09:00 AM",
+    end: "11:00 AM",
+    soft: "Soft example data 1",
+    dryn: "Dryn example data 1",
+    mobbin: "Mobbin example data 1",
+    assessment: "Assessment example data 1",
+    plan: "Plan example data 1"
+  },
+  {
+    name: "Jane Smith",
+    date: "2023-08-24",
+    start: "02:00 PM",
+    end: "04:00 PM",
+    soft: "Soft example data 2",
+    dryn: "Dryn example data 2",
+    mobbin: "Mobbin example data 2",
+    assessment: "Assessment example data 2",
+    plan: "Plan example data 2"
+  },
+  {
+    name: "Michael Johnson",
+    date: "2023-08-25",
+    start: "10:30 AM",
+    end: "12:30 PM",
+    soft: "Soft example data 3",
+    dryn: "Dryn example data 3",
+    mobbin: "Mobbin example data 3",
+    assessment: "Assessment example data 3",
+    plan: "Plan example data 3"
+  }
+];
+
+const tableBody = document.getElementById("personTableBody");
+
+  // Populate the table rows with data
+  function populateTable() {
+    tableBody.innerHTML = "";
+    for (let i = 0; i < people.length; i++) {
+      const person = people[i];
+      const row = document.createElement("tr");
+      row.setAttribute("data-row-index", i); // Add data-row-index attribute
+      row.innerHTML = `
+        <td>${person.name}</td>
+        <td>${person.date}</td>
+        <td>${person.start}</td>
+        <td>${person.end}</td>
+      `;
+      tableBody.appendChild(row);
+    }
+  }
+
+  function openEditModal(person) {
+  activePerson = person;
+  populateForm(person);
+  $("#editModal").modal("show");
+}
+
+tableBody.addEventListener("click", event => {
+  const target = event.target.closest("tr");
+  if (target) {
+    const rowIndex = parseInt(target.getAttribute("data-row-index"));
+    const person = people[rowIndex];
+    if (person) {
+      openEditModal(person);
+    }
+  }
+});
+
+// Function to populate the form with person data
+function populateForm(person) {
+  // Declare editForm here to ensure proper scope
+  const editForm = document.getElementById("editForm");
+  if (editForm) {
+    editForm.name.value = person.name || "";
+    editForm.subjective.value = person.subjective || "";
+    editForm.soft.value = person.soft || "";
+    editForm.dryn.value = person.dryn || "";
+    editForm.mobbin.value = person.mobbin || "";
+    editForm.assessment.value = person.assessment || "";
+    editForm.plan.value = person.plan || "";
+  }
+}
+
+  // Call the populateTable function to initially load the table
+  populateTable();
+
+ // Manually toggle accordion sections
+ const accordionSections = document.querySelectorAll(".accordion .card-header button");
+  accordionSections.forEach(button => {
+    button.addEventListener("click", function () {
+      const collapseElement = this.closest(".card").querySelector(".collapse");
+      const isExpanded = collapseElement.classList.contains("show");
+
+      if (isExpanded) {
+        collapseElement.classList.remove("show");
+        this.setAttribute("aria-expanded", "false");
+      } else {
+        collapseElement.classList.add("show");
+        this.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
+
+
+</script>
+    
 </html>

@@ -34,25 +34,127 @@
     <body>
         <div class="container mt-5">
             <h2>Patient</h2>
-            <form class="yeet">
+            <form id="bigyeet" class="yeet">
                 <div class="form-group">
                     <input type="text" class="form-control" id="name" name="name">
                     <label class="placeholder" for="name">Name</label>
                 </div>
                 <div class="form-group">
-                    <textarea class="form-control" id="subjective" name="subjective" rows="4"></textarea>
-                    <label class="placeholder" for="subjective">Subjective</label>
+                    <textarea class="form-control" id="age" name="age" rows="4"></textarea>
+                    <label class="placeholder" for="age">age</label>
                 </div>
                 <div class="form-group">
-                    <textarea class="form-control" id="assessment" name="assessment" rows="4"></textarea>
-                    <label class="placeholder" for="assessment">Assessment</label>
+                    <textarea class="form-control" id="bodypart" name="bodypart" rows="4"></textarea>
+                    <label class="placeholder" for="bodypart">bodypart</label>
                 </div>
-                <div class="form-group">
-                    <textarea class="form-control" id="plan" name="plan" rows="4"></textarea>
-                    <label class="placeholder" for="plan">Plan</label>
-                </div>
+               
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
+            <div id="notes-container"></div>
+      </div>
         </div>
     </body>
+    <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore-compat.js"></script>
+    <script>
+        window.onload = async function() {
+    
+    // Add Firebase configuration here
+  const firebaseConfig = {
+      apiKey: "AIzaSyBk2Uc6NfC9itI5eUMN7xdMyFkkdVb5VxU",
+      authDomain: "documentation-assistant.firebaseapp.com",
+      databaseURL: "https://documentation-assistant-default-rtdb.firebaseio.com",
+      projectId: "documentation-assistant",
+      storageBucket: "documentation-assistant.appspot.com",
+      messagingSenderId: "683953454833",
+      appId: "1:683953454833:web:3dbf0d3c740690e13af350",
+      measurementId: "G-G9XERCCSJ2"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const name = document.getElementById('name').value;
+      const age = document.getElementById('age').value;
+      const bodypart = document.getElementById('bodypart').value;
+      const notesContainer = document.getElementById('notes-container');
+      const addedNoteIds = new Set(); // Set to store added note IDs
+  
+    // Your interaction code goes here
+    const documentForm = document.getElementById('bigyeet');
+  
+  
+    
+     
+     
+         // const notesSnapshot = await db.collection('documents').get();
+  
+          // notesSnapshot.forEach((doc) => {
+          //   const noteData = doc.data();
+          //   const noteElement = document.createElement('div');
+          //   noteElement.innerHTML = `
+          //     <h3>${noteData.name}</h3>
+          //     <p>${noteData.age}</p>
+          //     <p>part: ${noteData.bodypart}</p>
+          //   `;
+          //   notesContainer.appendChild(noteElement);
+          // });
+          
+          
+          await db.collection('documents').orderBy('timestamp', "asc").onSnapshot((snapshot) => {
+              snapshot.docChanges().forEach((change) => {
+                if (change.type === 'added') {
+                  const noteData = change.doc.data();
+                  const noteId = change.doc.id;
+              if (!addedNoteIds.has(noteId)) {
+                      addedNoteIds.add(noteId);
+            
+                
+                  const noteElement = document.createElement('div');
+                  noteElement.innerHTML = `
+                  <h3>${noteData.name}</h3>
+                  <p>${noteData.age}</p>
+                  <p>part: ${noteData.bodypart}</p>
+                  `;
+                  notesContainer.appendChild(noteElement);
+                }
+                // Handle other types of changes (modified, removed) if needed
+              }});
+            });
+        
+      
+        documentForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+        
+      try{ 
+          var name = document.getElementById('name').value;
+      var age = document.getElementById('age').value;
+      var bodypart = document.getElementById('bodypart').value;
+          await db.collection('documents').add({
+             
+          name: name,
+          age: age,
+          bodypart: bodypart,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+         
+        });
+    
+        
+        documentForm.reset();
+      } catch (error) {
+        console.error('Error adding document: ', error);
+      }
+    });
+  
+    
+    
+  //   db.collection("documents").get().then((querySnapshot) => {
+  //     querySnapshot.forEach((doc) => {
+  //         // doc.data() is never undefined for query doc snapshots
+  //         console.log(doc.id, " => ", doc.data());
+  //     });
+  // });
+  
+  
+  };
+    </script>
 </html>

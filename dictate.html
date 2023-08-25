@@ -5,30 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>New note</title>
         <style>
-            form.yeet label {
-                background-color: transparent;
-            }
-            form.yeet .form-group {
-                position: relative;
-                margin-bottom: 2rem;
-            }
-    
-            form.yeet .form-control {
-                padding-top: 1.5rem;
-            }
-    
-            form.yeet .form-control:focus + .placeholder {
-                transform: translateY(-100%);
-                font-size: 0.75rem;
-            }
-    
-            form.yeet .placeholder {
-                position: absolute;
-                top: 1rem;
-                left: 0.75rem;
-                pointer-events: none;
-                transition: all 0.2s ease-out;
-            }
+            
         </style>
     </head>
     <body>
@@ -53,9 +30,10 @@
             <div id="notes-container"></div>
       </div>
         </div>
-    </body>
+    
     <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore-compat.js"></script>
+</body>
     <script>
         window.onload = async function() {
     

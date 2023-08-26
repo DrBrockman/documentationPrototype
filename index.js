@@ -12,7 +12,7 @@ const firebaseConfig = {
    // Initialize Firebase
    firebase.initializeApp(firebaseConfig);
    const db = firebase.firestore();
-   
+
 async function getDataAndPopulateTable() {
     const url = 'https://script.google.com/macros/s/AKfycbxqBB1SPDUV3Cd-3_NuHvSUxIckB4wFvu0lQwFa0msXEdS5039BQ_yqI1HzKHCdne-hgA/exec';
   
@@ -26,7 +26,44 @@ async function getDataAndPopulateTable() {
     }
   }
   getDataAndPopulateTable();
-  
+  function poptable () {
+  // Get the tbody element by its class name
+  const tbody = document.querySelector('.bod');
+
+// Clear existing rows from tbody
+tbody.innerHTML = '';
+
+// Loop through the data and create rows
+data.exercises.forEach(item => {
+  const tr = document.createElement('tr');
+  tr.classList.add('exerciseList');
+  tr.dataset.category = item.category; // Replace with the appropriate property name
+
+  tr.innerHTML = `
+    <td>
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input">
+      </div>
+    </td>
+    <td>${item.name}</td>
+    <td class="text-right">
+      <span>
+        <em class="fa fa-edit mr-2"></em>
+        <em class="fa fa-trash"></em>
+      </span>
+    </td>
+  `;
+
+  // Append the created row to the tbody
+  tbody.appendChild(tr);
+  $(tr).on("click", function(event) {
+if (!$(event.target).hasClass("fa")) { // Exclude clicks on the span element
+  var checkbox = $(this).find(".form-check-input");
+  checkbox.prop("checked", !checkbox.prop("checked"));
+}
+});
+});
+}
 $(document).ready(function() {
     // Load default content
     loadContent('dictate');

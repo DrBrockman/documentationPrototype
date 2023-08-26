@@ -114,7 +114,24 @@
     
    
     <script>
-        
+   // Function to get people array from local storage
+// Function to save people data to local storage
+function savePeopleToLocalStorage() {
+  localStorage.setItem("people", JSON.stringify(people));
+}
+
+// Load people data from local storage, if available
+function loadPeopleFromLocalStorage() {
+  const storedPeople = JSON.parse(localStorage.getItem("people"));
+  if (storedPeople) {
+    people = storedPeople;
+  }
+}
+
+// Call this function to load data from local storage when your script starts
+loadPeopleFromLocalStorage();
+
+     
       // Sample array of person objects
       var people = [
   {
@@ -177,6 +194,14 @@ var personBody = document.getElementById("personTableBody");
   $("#editModal").modal("show");
 }
 
+function updatePersonDetails(updatedPerson) {
+  const index = people.findIndex(person => person.id === updatedPerson.id);
+  if (index !== -1) {
+    people[index] = updatedPerson;
+    savePeopleToLocalStorage();
+  }
+}
+
 personBody.addEventListener("click", event => {
   const target = event.target.closest("tr");
   if (target) {
@@ -201,6 +226,15 @@ function populateForm(person) {
     editForm.assessment.value = person.assessment || "";
     editForm.plan.value = person.plan || "";
   }
+  document.getElementById("saveChanges").addEventListener("click", function() {
+  // ... Your existing code ...
+
+  // Update person details in the people array and local storage
+  updatePersonDetails(activePerson);
+
+  // Close the modal
+  $("#editModal").modal("hide");
+});
 }
 
   // Call the populateTable function to initially load the table

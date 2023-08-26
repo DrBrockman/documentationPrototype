@@ -1,3 +1,11 @@
+if (!localStorage.getItem('pt'))
+{
+    localStorage.setItem("pt", "[]")
+    
+    
+}
+var people = JSON.parse(localStorage.getItem('pt'))
+
 const firebaseConfig = {
     apiKey: "AIzaSyBk2Uc6NfC9itI5eUMN7xdMyFkkdVb5VxU",
     authDomain: "documentation-assistant.firebaseapp.com",
@@ -64,6 +72,28 @@ if (!$(event.target).hasClass("fa")) { // Exclude clicks on the span element
 });
 });
 }
+
+function updatePersonInLocalStorage(updatedPerson) {
+    // Retrieve existing data from localStorage
+    var existingData = localStorage.getItem("pt");
+    var people = JSON.parse(existingData);
+  
+    // Find the index of the person to be updated
+    var personIndex = people.findIndex(function(person) {
+      return person.name === updatedPerson.name;
+    });
+    var existingPerson = people[personIndex];
+    for (var key in updatedPerson) {
+      if (existingPerson.hasOwnProperty(key) && existingPerson[key] !== updatedPerson[key]) {
+        existingPerson[key] = updatedPerson[key];
+      }
+    }
+  
+    // Save the modified data back to localStorage
+    localStorage.setItem("pt", JSON.stringify(people));
+  }
+
+
 $(document).ready(function() {
     // Load default content
     loadContent('dictate');

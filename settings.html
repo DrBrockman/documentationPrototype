@@ -169,7 +169,7 @@ loadPeopleFromLocalStorage();
 
      
      
-
+var activePerson = null;
 var personBody = document.getElementById("personTableBody");
 
   // Populate the table rows with data
@@ -233,7 +233,7 @@ function populateForm(person) {
   // ... Your existing code ...
 
   // Update person details in the people array and local storage
-  updatePersonDetails(activePerson);
+  updatePersonInLocalStorage(activePerson)
 
   // Close the modal
   $("#editModal").modal("hide");

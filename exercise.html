@@ -170,13 +170,8 @@ padding-right: 2px;
                     </div>
                 </div>
             </div>
-            <!-- <div class="row height d-flex justify-content-center align-items-center mt-2 mb-2">
-              <div class="col-md-6">
-                <div id= "top" class="form">
-                  <i class="fa fa-search"></i>
-                  <input type="text" class="form-control form-input" placeholder="Search anything...">
-                  <span class="left-pan"><i class="fa fa-microphone"></i></span>
-                </div></div></div>  -->
+            
+            
                 <div class="container mt-4">
                     
                     <table class="table">
@@ -258,68 +253,70 @@ $(".exerciseList").on("click", function(event) {
   });
   
 
-async function getDataAndPopulateTable() {
-  const url = 'https://script.google.com/macros/s/AKfycbxqBB1SPDUV3Cd-3_NuHvSUxIckB4wFvu0lQwFa0msXEdS5039BQ_yqI1HzKHCdne-hgA/exec';
+// async function getDataAndPopulateTable() {
+//   const url = 'https://script.google.com/macros/s/AKfycbxqBB1SPDUV3Cd-3_NuHvSUxIckB4wFvu0lQwFa0msXEdS5039BQ_yqI1HzKHCdne-hgA/exec';
 
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
+//   try {
+//     const response = await fetch(url);
+//     const data = await response.json();
 
-    // Get the tbody element by its class name
-    const tbody = document.querySelector('.bod');
+    
+//   } catch (error) {
+//     console.error('Error fetching data:', error);
+//   }
+// }
 
-    // Clear existing rows from tbody
-    tbody.innerHTML = '';
+// getDataAndPopulateTable();
+function poptable () {
+  // Get the tbody element by its class name
+  const tbody = document.querySelector('.bod');
 
-    // Loop through the data and create rows
-    data.exercises.forEach(item => {
-      const tr = document.createElement('tr');
-      tr.classList.add('exerciseList');
-      tr.dataset.category = item.category; // Replace with the appropriate property name
+// Clear existing rows from tbody
+tbody.innerHTML = '';
 
-      tr.innerHTML = `
-        <td>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input">
-          </div>
-        </td>
-        <td>${item.name}</td>
-        <td class="text-right">
-          <span>
-            <em class="fa fa-edit mr-2"></em>
-            <em class="fa fa-trash"></em>
-          </span>
-        </td>
-      `;
+// Loop through the data and create rows
+data.exercises.forEach(item => {
+  const tr = document.createElement('tr');
+  tr.classList.add('exerciseList');
+  tr.dataset.category = item.category; // Replace with the appropriate property name
 
-      // Append the created row to the tbody
-      tbody.appendChild(tr);
-      $(tr).on("click", function(event) {
-    if (!$(event.target).hasClass("fa")) { // Exclude clicks on the span element
-      var checkbox = $(this).find(".form-check-input");
-      checkbox.prop("checked", !checkbox.prop("checked"));
-    }
-  });
-    });
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
+  tr.innerHTML = `
+    <td>
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input">
+      </div>
+    </td>
+    <td>${item.name}</td>
+    <td class="text-right">
+      <span>
+        <em class="fa fa-edit mr-2"></em>
+        <em class="fa fa-trash"></em>
+      </span>
+    </td>
+  `;
+
+  // Append the created row to the tbody
+  tbody.appendChild(tr);
+  $(tr).on("click", function(event) {
+if (!$(event.target).hasClass("fa")) { // Exclude clicks on the span element
+  var checkbox = $(this).find(".form-check-input");
+  checkbox.prop("checked", !checkbox.prop("checked"));
 }
+});
+});
+}
+//var theurl = 'https://script.google.com/macros/s/AKfycbxqBB1SPDUV3Cd-3_NuHvSUxIckB4wFvu0lQwFa0msXEdS5039BQ_yqI1HzKHCdne-hgA/exec';
 
-getDataAndPopulateTable();
+// const eventSource = new EventSource(theurl);
+// eventSource.onmessage = (event) => {
+//   const data = JSON.parse(event.data);
+//   console.log('Received updated data:', data);
+// };
 
-var theurl = 'https://script.google.com/macros/s/AKfycbxqBB1SPDUV3Cd-3_NuHvSUxIckB4wFvu0lQwFa0msXEdS5039BQ_yqI1HzKHCdne-hgA/exec';
-
-const eventSource = new EventSource(theurl);
-eventSource.onmessage = (event) => {
-  const data = JSON.parse(event.data);
-  console.log('Received updated data:', data);
-};
-
-eventSource.onerror = (error) => {
-  console.error('SSE Error:', error);
-};
-
+// eventSource.onerror = (error) => {
+//   console.error('SSE Error:', error);
+// };
+poptable ();
 
 });
 

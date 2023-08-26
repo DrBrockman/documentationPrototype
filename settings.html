@@ -116,7 +116,7 @@
     <script>
         
       // Sample array of person objects
-      const people = [
+      var people = [
   {
     name: "John Doe",
     date: "2023-08-23",
@@ -152,11 +152,11 @@
   }
 ];
 
-const tableBody = document.getElementById("personTableBody");
+const personBody = document.getElementById("personTableBody");
 
   // Populate the table rows with data
   function populateTable() {
-    tableBody.innerHTML = "";
+    personBody.innerHTML = "";
     for (let i = 0; i < people.length; i++) {
       const person = people[i];
       const row = document.createElement("tr");
@@ -167,7 +167,7 @@ const tableBody = document.getElementById("personTableBody");
         <td>${person.start}</td>
         <td>${person.end}</td>
       `;
-      tableBody.appendChild(row);
+      personBody.appendChild(row);
     }
   }
 
@@ -177,7 +177,7 @@ const tableBody = document.getElementById("personTableBody");
   $("#editModal").modal("show");
 }
 
-tableBody.addEventListener("click", event => {
+personBody.addEventListener("click", event => {
   const target = event.target.closest("tr");
   if (target) {
     const rowIndex = parseInt(target.getAttribute("data-row-index"));
@@ -207,8 +207,8 @@ function populateForm(person) {
   populateTable();
 
  // Manually toggle accordion sections
- const accordionSections = document.querySelectorAll(".accordion .card-header button");
-  accordionSections.forEach(button => {
+ const theaccordionSections = document.querySelectorAll(".accordion .card-header button");
+  theaccordionSections.forEach(button => {
     button.addEventListener("click", function () {
       const collapseElement = this.closest(".card").querySelector(".collapse");
       const isExpanded = collapseElement.classList.contains("show");

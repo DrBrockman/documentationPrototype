@@ -119,21 +119,8 @@
 function savePeopleToLocalStorage() {
   localStorage.setItem("people", JSON.stringify(people));
 }
-
-// Load people data from local storage, if available
-function loadPeopleFromLocalStorage() {
-  const storedPeople = JSON.parse(localStorage.getItem("people"));
-  if (storedPeople) {
-    people = storedPeople;
-  }
-}
-
-// Call this function to load data from local storage when your script starts
-loadPeopleFromLocalStorage();
-
-     
-      // Sample array of person objects
-      var people = [
+ // Sample array of person objects
+ var people = [
   {
     name: "John Doe",
     date: "2023-08-23",
@@ -168,6 +155,20 @@ loadPeopleFromLocalStorage();
     plan: "Plan example data 3"
   }
 ];
+savePeopleToLocalStorage()
+// Load people data from local storage, if available
+function loadPeopleFromLocalStorage() {
+  const storedPeople = JSON.parse(localStorage.getItem("people"));
+  if (storedPeople) {
+    people = storedPeople;
+  }
+}
+
+// Call this function to load data from local storage when your script starts
+loadPeopleFromLocalStorage();
+
+     
+     
 
 var personBody = document.getElementById("personTableBody");
 

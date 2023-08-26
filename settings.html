@@ -207,7 +207,7 @@ function populateForm(person) {
   populateTable();
 
  // Manually toggle accordion sections
- const theaccordionSections = document.querySelectorAll(".accordion .card-header button");
+ var theaccordionSections = document.querySelectorAll(".accordion .card-header button");
   theaccordionSections.forEach(button => {
     button.addEventListener("click", function () {
       const collapseElement = this.closest(".card").querySelector(".collapse");

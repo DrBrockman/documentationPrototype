@@ -8,7 +8,7 @@ const firebaseConfig = {
     appId: "1:683953454833:web:3dbf0d3c740690e13af350",
     measurementId: "G-G9XERCCSJ2"
   };
-
+var data;
    // Initialize Firebase
    firebase.initializeApp(firebaseConfig);
    const db = firebase.firestore();
@@ -18,7 +18,7 @@ async function getDataAndPopulateTable() {
   
     try {
       const response = await fetch(url);
-      const data = await response.json();
+       data = await response.json();
   
       
     } catch (error) {

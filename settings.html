@@ -226,6 +226,8 @@ function populateForm(person) {
     editForm.assessment.value = person.assessment || "";
     editForm.plan.value = person.plan || "";
   }
+}
+
   document.getElementById("saveChanges").addEventListener("click", function() {
   // ... Your existing code ...
 
@@ -235,7 +237,7 @@ function populateForm(person) {
   // Close the modal
   $("#editModal").modal("hide");
 });
-}
+
 
   // Call the populateTable function to initially load the table
   populateTable();

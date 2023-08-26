@@ -101,63 +101,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore-compat.js"></script>
   <script src="index.js"></script>
-//        $(document).ready(function() {
-//     // Load default content
-//     loadContent('dictate');
 
-//     // Handle navigation clicks
-//     $('.icon, .icon-center').click(function(e) {
-//         e.preventDefault();
-//         const targetPage = $(this).data('page');
-//         loadContent(targetPage);
-//         updateActiveIcon(this);
-//     });
-// });
-
-// function loadContent(page) {
-//     fetch(`${page}.html`)
-//         .then(response => response.text())
-//         .then(data => {
-//             $('#content').html(data);
-//         })
-//         .catch(error => {
-//             $('#content').html('<p>Error loading content.</p>');
-//         });
-// }
-
-// function updateActiveIcon(clickedIcon) {
-//     $('.icon, .icon-center').removeClass('active-indicator'); // Remove active class from all icons
-//     $(clickedIcon).addClass('active-indicator'); // Add active class to the clicked icon
-// }
-// const checkboxes = document.querySelectorAll('input[name="options"]');
-//         const badge = document.getElementById('badge');
-
-//         checkboxes.forEach(checkbox => {
-//             checkbox.addEventListener('change', updateBadge);
-//         });
-
-//         function updateBadge() {
-//             const checkedCheckboxes = document.querySelectorAll('input[name="options"]:checked');
-//             if (checkedCheckboxes.length > 0) {
-//                 badge.textContent = checkedCheckboxes.length;
-//                 badge.style.display = 'inline';
-//             } else {
-//                 badge.style.display = 'none';
-//             }
-//         }
-// 
-
-
-//         if ('serviceWorker' in navigator) {
-//           navigator.serviceWorker.register('service-worker.js')
-//             .then((registration) => {
-//               console.log('Service Worker registered with scope:', registration.scope);
-//             })
-//             .catch((error) => {
-//               console.error('Service Worker registration failed:', error);
-//             });
-//         }
-//      
       
 </body>
 </html>

@@ -28,80 +28,121 @@
     
    <!-- Modal for editing person details -->
    <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog " role="document">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header ">
           <h5 class="modal-title">Edit Person Details</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"></span>
           </button>
         </div>
         <div class="modal-body">
+          
           <form id="editForm">
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" class="form-control" id="name" name="name">
-            </div>
-            <div class="form-group">
-              <label for="subjective">Subjective</label>
-              <textarea class="form-control" id="subjective" name="subjective"></textarea>
-            </div>
-            <div class="accordion" id="accordionSections">
-                <div class="card">
-                  <div class="card-header" id="headingOne">
-                    <h2 class="mb-0">
-                      <button class="btn btn-link" type="button" aria-expanded="false" aria-controls="collapseOne">
-                        Section One
-                      </button>
-                    </h2>
-                  </div>
-                  <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSections">
-                    <div class="card-body">
-                      <label for="soft">Soft</label>
-                      <input type="text" class="form-control" id="soft" name="soft">
-                    </div>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="card-header" id="headingTwo">
-                    <h2 class="mb-0">
-                      <button class="btn btn-link" type="button" aria-expanded="false" aria-controls="collapseTwo">
-                        Section Two
-                      </button>
-                    </h2>
-                  </div>
-                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSections">
-                    <div class="card-body">
-                      <label for="dryn">Dryn</label>
-                      <input type="text" class="form-control" id="dryn" name="dryn">
-                    </div>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="card-header" id="headingThree">
-                    <h2 class="mb-0">
-                      <button class="btn btn-link" type="button" aria-expanded="false" aria-controls="collapseThree">
-                        Section Three
-                      </button>
-                    </h2>
-                  </div>
-                  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSections">
-                    <div class="card-body">
-                      <label for="mobbin">Mobbin</label>
-                      <input type="text" class="form-control" id="mobbin" name="mobbin">
-                    </div>
-                  </div>
-                </div>
-              </div>
+            
+            
               
-            <div class="form-group">
-              <label for="assessment">Assessment</label>
-              <textarea class="form-control" id="assessment" name="assessment"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="plan">Plan</label>
-              <textarea class="form-control" id="plan" name="plan"></textarea>
-            </div>
+                
+                  <div class="row g-3">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" name="name">
+                      </div>
+                    </div>
+                    <div class="col">
+                      <label for="start">Start</label>
+                      <input type="text" class="form-control" id="start" aria-label="First name">
+                    </div>
+                    <div class="col">
+                      <label for="end">End</label>
+                      <input type="text" class="form-control" id="end" aria-label="Last name">
+                    </div>
+                  </div>
+                  
+                  <div class="form-group pb-3">
+                    <label for="subjective">Subjective</label>
+                    <textarea class="form-control" id="subjective" name="subjective"></textarea>
+                  </div>
+                  
+                  <div class="btn-group " role="group" aria-label="Basic radio toggle button group">
+                    <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent1" aria-expanded="false" aria-controls="collapseContent1">Functional</button>
+                    <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent2" aria-expanded="false" aria-controls="collapseContent2">Soft Tissue</button>
+                    <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent3" aria-expanded="false" aria-controls="collapseContent3">Joint</button>
+                    <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent4" aria-expanded="false" aria-controls="collapseContent4">Dry Needle</button>
+                  </div>
+                
+                  <div class="collapse collapse-content" id="collapseContent1">
+                    <div class="d-flex flex-wrap gap-1" >
+                      <input type="checkbox" class=" btn-check" id="btnCheck1" autocomplete="off">
+                      <label class="btn btn-outline-primary" for="btnCheck1">ADL</label>
+                    
+                      <input type="checkbox" class=" btn-check" id="btnCheck2" autocomplete="off">
+                      <label class="btn btn-outline-primary" for="btnCheck2">Balance</label>
+                    
+                      <input type="checkbox" class="btn-check" id="btnCheck3" autocomplete="off">
+                      <label class="btn btn-outline-primary" for="btnCheck3">Endurance</label>
+                      <input type="checkbox" class=" btn-check" id="btnCheck4" autocomplete="off">
+                      <label class="btn btn-outline-primary" for="btnCheck4">Ergonomics</label>
+                      <input type="checkbox" class="btn-check" id="btnCheck5" autocomplete="off">
+                      <label class="btn btn-outline-primary" for="btnCheck5">Gait</label>
+                      <input type="checkbox" class="btn-check" id="btnCheck6" autocomplete="off">
+                      <label class="btn btn-outline-primary" for="btnCheck6">Posture</label> 
+                      <input type="checkbox" class="btn-check" id="btnCheck7" autocomplete="off">
+                      <label class="btn btn-outline-primary" for="btnCheck7">Athletics</label>
+                      <input type="checkbox" class="btn-check" id="btnCheck8" autocomplete="off">
+                      <label class="btn btn-outline-primary" for="btnCheck8">Transfers</label>
+                      <input type="checkbox" class="btn-check" id="btnCheck9" autocomplete="off">
+                      <label class="btn btn-outline-primary" for="btnCheck9">Work Task</label>
+                    </div>
+                  </div>
+
+                  <div class="collapse collapse-content" id="collapseContent2">
+                    <div class="form-floating pb-3" >
+                      <textarea class="form-control" id="softy" name="softy" placeholder="Soft Tissue"></textarea>
+                      <label for="softy">Soft Tissue</label>
+                    </div>
+                  </div>
+
+
+                  <div class="collapse collapse-content" id="collapseContent3">
+                    <div class="form-floating pb-3" >
+                      <textarea class="form-control" id="mob" name="mob" placeholder="Joint Mobilization"></textarea>
+                      <label for="mob">Joint Mobilization</label>
+                    </div>
+                  </div>
+                  
+                  <div class="collapse collapse-content" id="collapseContent4">
+                    <div class="form-floating pb-3" >
+                      <textarea class="form-control" id="dn" name="dn" placeholder="Dry Needling"></textarea>
+                      <label for="dn">Dry Needling</label>
+                    </div>
+                  </div>
+
+            
+                  <div class="form-group pb-3">
+                    <label for="assessment">Assessment</label>
+                    <textarea class="form-control" id="assessment" name="assessment"></textarea>
+                  </div>
+
+                  <div class="form-group pb-3">
+                    <label for="plan">Plan</label>
+                    <textarea class="form-control" id="plan" name="plan"></textarea>
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon2">TE</span>
+                    <input type="text" class="form-control"  >
+                    <span class="input-group-text" id="basic-addon">TA</span>
+                    <input type="text" class="form-control"   >
+                    <span class="input-group-text" id="basic-addon2">Manual</span>
+                    <input type="text" class="form-control"  >
+                    <span class="input-group-text" id="basic-addon">NMRE</span>
+                    <input type="text" class="form-control"   >
+                  </div>
+
+    
           </form>
         </div>
         <div class="modal-footer">
@@ -115,12 +156,8 @@
    
     <script>
    // Function to get people array from local storage
-// Function to save people data to local storage
-function savePeopleToLocalStorage() {
-  localStorage.setItem("people", JSON.stringify(people));
-}
- // Sample array of person objects
- var people = [
+   if (!localStorage.getItem('personsArray')) {
+  localStorage.setItem('personsArray', JSON.stringify([
   {
     name: "John Doe",
     date: "2023-08-23",
@@ -154,111 +191,97 @@ function savePeopleToLocalStorage() {
     assessment: "Assessment example data 3",
     plan: "Plan example data 3"
   }
-];
-savePeopleToLocalStorage()
-// Load people data from local storage, if available
-function loadPeopleFromLocalStorage() {
-  const storedPeople = JSON.parse(localStorage.getItem("people"));
-  if (storedPeople) {
-    people = storedPeople;
-  }
+]));
 }
+// Get the table body element
+const personTableBody = document.getElementById('personTableBody');
+const personsArray = JSON.parse(localStorage.getItem('personsArray'));
 
-// Call this function to load data from local storage when your script starts
-loadPeopleFromLocalStorage();
+// Loop through the array and populate the table rows
+personsArray.forEach((person, index) => {
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td>${person.name}</td>
+    <td>${person.date}</td>
+    <td>${person.start}</td>
+    <td>${person.end}</td>
+  `;
 
-     
-     
-var activePerson = null;
-var personBody = document.getElementById("personTableBody");
+  // Attach a click event listener to each row
+  row.addEventListener('click', () => openEditModal(index));
 
-  // Populate the table rows with data
-  function populateTable() {
-    personBody.innerHTML = "";
-    for (let i = 0; i < people.length; i++) {
-      const person = people[i];
-      const row = document.createElement("tr");
-      row.setAttribute("data-row-index", i); // Add data-row-index attribute
-      row.innerHTML = `
-        <td>${person.name}</td>
-        <td>${person.date}</td>
-        <td>${person.start}</td>
-        <td>${person.end}</td>
-      `;
-      personBody.appendChild(row);
-    }
-  }
-
-  function openEditModal(person) {
-  activePerson = person;
-  populateForm(person);
-  $("#editModal").modal("show");
-}
-
-function updatePersonDetails(updatedPerson) {
-  const index = people.findIndex(person => person.id === updatedPerson.id);
-  if (index !== -1) {
-    people[index] = updatedPerson;
-    savePeopleToLocalStorage();
-  }
-}
-
-personBody.addEventListener("click", event => {
-  const target = event.target.closest("tr");
-  if (target) {
-    const rowIndex = parseInt(target.getAttribute("data-row-index"));
-    const person = people[rowIndex];
-    if (person) {
-      openEditModal(person);
-    }
-  }
+  personTableBody.appendChild(row);
 });
 
-// Function to populate the form with person data
-function populateForm(person) {
-  // Declare editForm here to ensure proper scope
-  const editForm = document.getElementById("editForm");
-  if (editForm) {
-    editForm.name.value = person.name || "";
+function openEditModal(index) {
+  const person = personsArray[index];
+  const editForm = document.getElementById('editForm');
+
+  // Populate the form fields with person's data
+  editForm.name.value = person.name || "";
+  editForm.start.value = person.start || "";
+  editForm.end.value = person.end || "";
     editForm.subjective.value = person.subjective || "";
-    editForm.soft.value = person.soft || "";
-    editForm.dryn.value = person.dryn || "";
-    editForm.mobbin.value = person.mobbin || "";
+    editForm.softy.value = person.soft || "";
+    editForm.dn.value = person.dryn || "";
+    editForm.mob.value = person.mobbin || "";
     editForm.assessment.value = person.assessment || "";
     editForm.plan.value = person.plan || "";
-  }
+  // Populate other form fields as needed
+
+  // Show the modal
+  $('#editModal').modal('show');
+
+  // Save the index of the person being edited
+  editForm.setAttribute('data-person-index', index);
 }
+const saveChangesButton = document.getElementById('saveChanges');
+saveChangesButton.addEventListener('click', () => {
+  const editForm = document.getElementById('editForm');
+  const index = editForm.getAttribute('data-person-index');
 
-  document.getElementById("saveChanges").addEventListener("click", function() {
-  // ... Your existing code ...
+  // Update the person's data in the array
+  personsArray[index].name = editForm.name.value;
+  personsArray[index].start = editForm.start.value;
+  personsArray[index].end = editForm.end.value;
+  personsArray[index].subjective = editForm.subjective.value;
+  personsArray[index].softy = editForm.soft.value;
+  personsArray[index].dn = editForm.dryn.value;
+  personsArray[index].mob = editForm.mobbin.value;
+  personsArray[index].assessment = editForm.assessment.value;
+  personsArray[index].plan = editForm.plan.value;
+  
+  // Update other fields as needed
 
-  // Update person details in the people array and local storage
-  updatePersonInLocalStorage(activePerson)
+  // Save the updated array back to local storage
+  localStorage.setItem('personsArray', JSON.stringify(personsArray));
 
   // Close the modal
-  $("#editModal").modal("hide");
+  $('#editModal').modal('hide');
+
+  // Update the table to reflect the changes
+  updateTable();
 });
+function updateTable() {
+  // Clear the existing table rows
+  personTableBody.innerHTML = '';
 
+  // Repopulate the table rows
+  personsArray.forEach((person, index) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${person.name}</td>
+      <td>${person.date}</td>
+      <td>${person.start}</td>
+      <td>${person.end}</td>
+    `;
 
-  // Call the populateTable function to initially load the table
-  populateTable();
+    // Attach a click event listener to each row
+    row.addEventListener('click', () => openEditModal(index));
 
- // Manually toggle accordion sections
- var theaccordionSections = document.querySelectorAll(".accordion .card-header button");
-  theaccordionSections.forEach(button => {
-    button.addEventListener("click", function () {
-      const collapseElement = this.closest(".card").querySelector(".collapse");
-      const isExpanded = collapseElement.classList.contains("show");
-
-      if (isExpanded) {
-        collapseElement.classList.remove("show");
-        this.setAttribute("aria-expanded", "false");
-      } else {
-        collapseElement.classList.add("show");
-        this.setAttribute("aria-expanded", "true");
-      }
-    });
+    personTableBody.appendChild(row);
   });
+}
 
 
 </script>

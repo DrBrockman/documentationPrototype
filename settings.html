@@ -163,9 +163,9 @@
     date: "2023-08-23",
     start: "09:00 AM",
     end: "11:00 AM",
-    soft: "Soft example data 1",
-    dryn: "Dryn example data 1",
-    mobbin: "Mobbin example data 1",
+    softy: "Soft example data 1",
+    dn: "Dryn example data 1",
+    mob: "Mobbin example data 1",
     assessment: "Assessment example data 1",
     plan: "Plan example data 1"
   },
@@ -174,9 +174,9 @@
     date: "2023-08-24",
     start: "02:00 PM",
     end: "04:00 PM",
-    soft: "Soft example data 2",
-    dryn: "Dryn example data 2",
-    mobbin: "Mobbin example data 2",
+    softy: "Soft example data 2",
+    dn: "Dryn example data 2",
+    mob: "Mobbin example data 2",
     assessment: "Assessment example data 2",
     plan: "Plan example data 2"
   },
@@ -185,9 +185,9 @@
     date: "2023-08-25",
     start: "10:30 AM",
     end: "12:30 PM",
-    soft: "Soft example data 3",
-    dryn: "Dryn example data 3",
-    mobbin: "Mobbin example data 3",
+    softy: "Soft example data 3",
+    dn: "Dryn example data 3",
+    mob: "Mobbin example data 3",
     assessment: "Assessment example data 3",
     plan: "Plan example data 3"
   }
@@ -222,9 +222,9 @@ function openEditModal(index) {
   editForm.start.value = person.start || "";
   editForm.end.value = person.end || "";
     editForm.subjective.value = person.subjective || "";
-    editForm.softy.value = person.soft || "";
-    editForm.dn.value = person.dryn || "";
-    editForm.mob.value = person.mobbin || "";
+    editForm.softy.value = person.softy || "";
+    editForm.dn.value = person.dn || "";
+    editForm.mob.value = person.mob || "";
     editForm.assessment.value = person.assessment || "";
     editForm.plan.value = person.plan || "";
   // Populate other form fields as needed
@@ -245,9 +245,9 @@ saveChangesButton.addEventListener('click', () => {
   personsArray[index].start = editForm.start.value;
   personsArray[index].end = editForm.end.value;
   personsArray[index].subjective = editForm.subjective.value;
-  personsArray[index].softy = editForm.soft.value;
-  personsArray[index].dn = editForm.dryn.value;
-  personsArray[index].mob = editForm.mobbin.value;
+  personsArray[index].softy = editForm.softy.value;
+  personsArray[index].dn = editForm.dn.value;
+  personsArray[index].mob = editForm.mob.value;
   personsArray[index].assessment = editForm.assessment.value;
   personsArray[index].plan = editForm.plan.value;
   

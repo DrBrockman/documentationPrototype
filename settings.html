@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-       
+       .btn-activeF {
+    background-color: #007bff;
+    color: white;
+}
       </style>
 </head>
 <body>
@@ -282,7 +285,16 @@ function updateTable() {
     personTableBody.appendChild(row);
   });
 }
+$('.collapse-button').on('click', function() {
+        // Toggle active class for the clicked button
+        $(this).toggleClass('btn-activeF');
 
+        // Remove active class from other buttons
+        $('.collapse-button').not(this).removeClass('btn-activeF');
+
+        // Hide other collapse contents
+        $('.collapse-content').not($(this).attr('data-target')).collapse('hide');
+    });
 
 </script>
     

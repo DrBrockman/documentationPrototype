@@ -158,6 +158,42 @@
     
    
     <script>
+      var newArray = []; // Create an empty array to store the data
+
+async function getit() {
+  var url = `https://script.google.com/macros/s/AKfycbyPBAWJ0hmofn1usjBHbiH5mlak0cIS1--m49g6Zn00z8h62neQsCbQMzOYCBvkU5Xe5g/exec?action=fetchSpreadsheetData`;
+
+  try {
+    const response = await fetch(url);
+
+    if (response.ok) {
+      const data = await response.json();
+      // Assuming the data from the server is an array of objects with 'name', 'date', 'start', and 'end' properties
+      newArray.push(...data); // Push the data into personsArray
+      console.log(newArray); // Log the data received from the server
+
+      // Loop through personsArray and create table rows
+      newArray.forEach((person, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${person.name}</td>
+          <td>${person.date}</td>
+          <td>${person.start}</td>
+          <td>${person.end}</td>
+        `;
+
+        // Attach a click event listener to each row
+        row.addEventListener('click', () => openEditModal(index));
+
+        personTableBody.appendChild(row);
+      });
+    } else {
+      throw new Error('Request failed with status: ' + response.status);
+    }
+  } catch (error) {
+    console.error(error); // Handle any errors
+  }
+}
    // Function to get people array from local storage
    if (!localStorage.getItem('personsArray')) {
   localStorage.setItem('personsArray', JSON.stringify([

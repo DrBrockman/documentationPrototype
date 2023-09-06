@@ -34,6 +34,22 @@ async function getDataAndPopulateTable() {
     }
   }
   getDataAndPopulateTable();
+  function getIt () {
+    newArray.people.forEach(person => {
+      var row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${person.name}</td>
+        <td>${person.date}</td>
+        <td>${person.start}</td>
+        <td>${person.end}</td>
+      `;
+
+      // Attach a click event listener to each row
+      row.addEventListener('click', () => openEditModal(index));
+
+      personTableBody.appendChild(row);
+    });
+  }
   function poptable () {
   // Get the tbody element by its class name
   const tbody = document.querySelector('.bod');

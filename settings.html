@@ -200,20 +200,7 @@
 // Get the table body element
 const personTableBody = document.getElementById('personTableBody');
 const personsArray = JSON.parse(localStorage.getItem('personsArray'));
-newArray.people.forEach(item => {
-          var row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${person.name}</td>
-            <td>${person.date}</td>
-            <td>${person.start}</td>
-            <td>${person.end}</td>
-          `;
-  
-          // Attach a click event listener to each row
-          row.addEventListener('click', () => openEditModal(index));
-  
-          personTableBody.appendChild(row);
-        });
+
 // Loop through the array and populate the table rows
 personsArray.forEach((person, index) => {
   var row = document.createElement('tr');
@@ -309,7 +296,7 @@ $('.collapse-button').on('click', function() {
         // Hide other collapse contents
         $('.collapse-content').not($(this).attr('data-target')).collapse('hide');
     });
-
+bringIt();
 </script>
     
 </html>

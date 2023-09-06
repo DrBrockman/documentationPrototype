@@ -158,20 +158,7 @@
     
    
     <script>
-       newArray.forEach((person, index) => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${person.name}</td>
-            <td>${person.date}</td>
-            <td>${person.start}</td>
-            <td>${person.end}</td>
-          `;
-  
-          // Attach a click event listener to each row
-          row.addEventListener('click', () => openEditModal(index));
-  
-          personTableBody.appendChild(row);
-        });
+       
    // Function to get people array from local storage
    if (!localStorage.getItem('personsArray')) {
   localStorage.setItem('personsArray', JSON.stringify([
@@ -213,7 +200,20 @@
 // Get the table body element
 const personTableBody = document.getElementById('personTableBody');
 const personsArray = JSON.parse(localStorage.getItem('personsArray'));
-
+newArray.forEach((person, index) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${person.name}</td>
+            <td>${person.date}</td>
+            <td>${person.start}</td>
+            <td>${person.end}</td>
+          `;
+  
+          // Attach a click event listener to each row
+          row.addEventListener('click', () => openEditModal(index));
+  
+          personTableBody.appendChild(row);
+        });
 // Loop through the array and populate the table rows
 personsArray.forEach((person, index) => {
   const row = document.createElement('tr');

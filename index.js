@@ -104,12 +104,9 @@ function updatePersonInLocalStorage(updatedPerson) {
 
       if (response.ok) {
         newArray =  response
-        // Assuming the data from the server is an array of objects with 'name', 'date', 'start', and 'end' properties
-        // Push the data into personsArray
         
-        newArray.forEach (function (item) {
-         console.log(item)})
-       
+      
+
       } else {
         throw new Error('Request failed with status: ' + response.status);
       }

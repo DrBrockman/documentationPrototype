@@ -92,7 +92,30 @@ function updatePersonInLocalStorage(updatedPerson) {
     // Save the modified data back to localStorage
     localStorage.setItem("pt", JSON.stringify(people));
   }
+  var newArray = []; // Create an empty array to store the data
 
+  async function getit() {
+    var url = `https://script.google.com/macros/s/AKfycbyPBAWJ0hmofn1usjBHbiH5mlak0cIS1--m49g6Zn00z8h62neQsCbQMzOYCBvkU5Xe5g/exec?action=fetchSpreadsheetData`;
+  
+    try {
+      const response = await fetch(url);
+  
+      if (response.ok) {
+        newArray= await response.json();
+        // Assuming the data from the server is an array of objects with 'name', 'date', 'start', and 'end' properties
+       // Push the data into personsArray
+        console.log(newArray); // Log the data received from the server
+  
+        // Loop through personsArray and create table rows
+       
+      } else {
+        throw new Error('Request failed with status: ' + response.status);
+      }
+    } catch (error) {
+      console.error(error); // Handle any errors
+    }
+  }
+  getit();
 
 $(document).ready(function() {
     // Load default content

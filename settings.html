@@ -201,7 +201,7 @@
 const personTableBody = document.getElementById('personTableBody');
 const personsArray = JSON.parse(localStorage.getItem('personsArray'));
 newArray.forEach((person, index) => {
-          const row = document.createElement('tr');
+          var row = document.createElement('tr');
           row.innerHTML = `
             <td>${person.name}</td>
             <td>${person.date}</td>
@@ -216,7 +216,7 @@ newArray.forEach((person, index) => {
         });
 // Loop through the array and populate the table rows
 personsArray.forEach((person, index) => {
-  const row = document.createElement('tr');
+  var row = document.createElement('tr');
   row.innerHTML = `
     <td>${person.name}</td>
     <td>${person.date}</td>

@@ -12,149 +12,149 @@
 </head>
 <body>
 
-    <div class="container mt-5">
-      <h1>Person List</h1>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Start</th>
-            <th>End</th>
-          </tr>
-        </thead>
-        <tbody id="personTableBody">
-          <!-- JavaScript will populate rows here -->
-        </tbody>
-      </table>
-    </div>
-    
-   <!-- Modal for editing person details -->
-   <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog " role="document">
-      <div class="modal-content">
-        <div class="modal-header ">
-          <h5 class="modal-title">Edit Person Details</h5>
+  <div class="container mt-5">
+    <h1>Person List</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Date</th>
+          <th>Start</th>
+          <th>End</th>
+        </tr>
+      </thead>
+      <tbody id="personTableBody">
+        <!-- JavaScript will populate rows here -->
+      </tbody>
+    </table>
+  </div>
+  
+ <!-- Modal for editing person details -->
+ <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content">
+      <div class="modal-header ">
+        <h5 class="modal-title">Edit Person Details</h5>
+        
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <form id="editForm">
           
-          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true"></span>
-          </button>
-        </div>
-        <div class="modal-body">
           
-          <form id="editForm">
-            
             
               
+                <div class="row g-3">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="name">Name</label>
+                      <input type="text" class="form-control" id="name" name="name">
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label for="start">Start</label>
+                    <input type="text" class="form-control" id="start" aria-label="First name">
+                  </div>
+                  <div class="col">
+                    <label for="end">End</label>
+                    <input type="text" class="form-control" id="end" aria-label="Last name">
+                  </div>
+                </div>
                 
-                  <div class="row g-3">
-                    <div class="col-6">
-                      <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" name="name">
-                      </div>
-                    </div>
-                    <div class="col">
-                      <label for="start">Start</label>
-                      <input type="text" class="form-control" id="start" aria-label="First name">
-                    </div>
-                    <div class="col">
-                      <label for="end">End</label>
-                      <input type="text" class="form-control" id="end" aria-label="Last name">
-                    </div>
-                  </div>
-                  
-                  <div class="form-floating pb-3" >
-                    <textarea class="form-control" id="subjective" name="subjective" placeholder="Subjective"></textarea>
-                    <label for="subjective">Subjective</label>
-                  </div>
-                  
-                  <div class="btn-group " role="group" aria-label="Basic radio toggle button group">
-                    <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent1" aria-expanded="false" aria-controls="collapseContent1">Functional</button>
-                    <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent2" aria-expanded="false" aria-controls="collapseContent2">Soft Tissue</button>
-                    <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent3" aria-expanded="false" aria-controls="collapseContent3">Joint</button>
-                    <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent4" aria-expanded="false" aria-controls="collapseContent4">Dry Needle</button>
-                  </div>
+                <div class="form-floating pb-3 pt-3" >
+                  <textarea class="form-control" id="subjective" name="subjective" placeholder="Subjective"></textarea>
+                  <label for="subjective">Subjective</label>
+                </div>
                 
-                  <div class="collapse collapse-content" id="collapseContent1">
-                    <div class="d-flex flex-wrap gap-1" >
-                      <input type="checkbox" class=" btn-check" id="btnCheck1" autocomplete="off">
-                      <label class="btn btn-outline-primary" for="btnCheck1">ADL</label>
-                    
-                      <input type="checkbox" class=" btn-check" id="btnCheck2" autocomplete="off">
-                      <label class="btn btn-outline-primary" for="btnCheck2">Balance</label>
-                    
-                      <input type="checkbox" class="btn-check" id="btnCheck3" autocomplete="off">
-                      <label class="btn btn-outline-primary" for="btnCheck3">Endurance</label>
-                      <input type="checkbox" class=" btn-check" id="btnCheck4" autocomplete="off">
-                      <label class="btn btn-outline-primary" for="btnCheck4">Ergonomics</label>
-                      <input type="checkbox" class="btn-check" id="btnCheck5" autocomplete="off">
-                      <label class="btn btn-outline-primary" for="btnCheck5">Gait</label>
-                      <input type="checkbox" class="btn-check" id="btnCheck6" autocomplete="off">
-                      <label class="btn btn-outline-primary" for="btnCheck6">Posture</label> 
-                      <input type="checkbox" class="btn-check" id="btnCheck7" autocomplete="off">
-                      <label class="btn btn-outline-primary" for="btnCheck7">Athletics</label>
-                      <input type="checkbox" class="btn-check" id="btnCheck8" autocomplete="off">
-                      <label class="btn btn-outline-primary" for="btnCheck8">Transfers</label>
-                      <input type="checkbox" class="btn-check" id="btnCheck9" autocomplete="off">
-                      <label class="btn btn-outline-primary" for="btnCheck9">Work Task</label>
-                    </div>
-                  </div>
-
-                  <div class="collapse collapse-content" id="collapseContent2">
-                    <div class="form-floating pb-3" >
-                      <textarea class="form-control" id="softy" name="softy" placeholder="Soft Tissue"></textarea>
-                      <label for="softy">Soft Tissue</label>
-                    </div>
-                  </div>
-
-
-                  <div class="collapse collapse-content" id="collapseContent3">
-                    <div class="form-floating pb-3" >
-                      <textarea class="form-control" id="mob" name="mob" placeholder="Joint Mobilization"></textarea>
-                      <label for="mob">Joint Mobilization</label>
-                    </div>
-                  </div>
+                <div class="btn-group w-100 pb-1" role="group" aria-label="Basic radio toggle button group">
+                  <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent1" aria-expanded="false" aria-controls="collapseContent1">Functional</button>
+                  <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent2" aria-expanded="false" aria-controls="collapseContent2">Soft Tissue</button>
+                  <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent3" aria-expanded="false" aria-controls="collapseContent3">Joint</button>
+                  <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent4" aria-expanded="false" aria-controls="collapseContent4">Dry Needle</button>
+                </div>
+              
+                <div class="collapse collapse-content" id="collapseContent1">
+                  <div class="d-flex flex-wrap gap-1" >
+                    <input type="checkbox" class=" btn-check " id="btnCheck1" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnCheck1">ADL</label>
                   
-                  <div class="collapse collapse-content" id="collapseContent4">
-                    <div class="form-floating pb-3" >
-                      <textarea class="form-control" id="dn" name="dn" placeholder="Dry Needling"></textarea>
-                      <label for="dn">Dry Needling</label>
-                    </div>
+                    <input type="checkbox" class=" btn-check" id="btnCheck2" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnCheck2">Balance</label>
+                  
+                    <input type="checkbox" class="btn-check" id="btnCheck3" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnCheck3">Endurance</label>
+                    <input type="checkbox" class=" btn-check" id="btnCheck4" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnCheck4">Ergonomics</label>
+                    <input type="checkbox" class="btn-check" id="btnCheck5" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnCheck5">Gait</label>
+                    <input type="checkbox" class="btn-check" id="btnCheck6" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnCheck6">Posture</label> 
+                    <input type="checkbox" class="btn-check" id="btnCheck7" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnCheck7">Athletics</label>
+                    <input type="checkbox" class="btn-check" id="btnCheck8" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnCheck8">Transfers</label>
+                    <input type="checkbox" class="btn-check" id="btnCheck9" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnCheck9">Work Task</label>
                   </div>
+                </div>
 
-            
+                <div class="collapse collapse-content" id="collapseContent2">
                   <div class="form-floating pb-3" >
-                    <textarea class="form-control" id="assessment" name="assessment" placeholder="Assessment"></textarea>
-                    <label for="assessment">Assessment</label>
+                    <textarea class="form-control" id="softy" name="softy" placeholder="Soft Tissue"></textarea>
+                    <label for="softy">Soft Tissue</label>
                   </div>
+                </div>
 
+
+                <div class="collapse collapse-content" id="collapseContent3">
                   <div class="form-floating pb-3" >
-                    <textarea class="form-control" id="plan" name="plan" placeholder="Plan"></textarea>
-                    <label for="plan">Plan</label>
+                    <textarea class="form-control" id="mob" name="mob" placeholder="Joint Mobilization"></textarea>
+                    <label for="mob">Joint Mobilization</label>
                   </div>
-
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon2">TE</span>
-                    <input type="text" class="form-control"  >
-                    <span class="input-group-text" id="basic-addon">TA</span>
-                    <input type="text" class="form-control"   >
-                    <span class="input-group-text" id="basic-addon2">Manual</span>
-                    <input type="text" class="form-control"  >
-                    <span class="input-group-text" id="basic-addon">NMRE</span>
-                    <input type="text" class="form-control"   >
+                </div>
+                
+                <div class="collapse collapse-content" id="collapseContent4">
+                  <div class="form-floating pb-3" >
+                    <textarea class="form-control" id="dn" name="dn" placeholder="Dry Needling"></textarea>
+                    <label for="dn">Dry Needling</label>
                   </div>
+                </div>
 
-    
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" id="saveChanges">Save Changes</button>
-        </div>
+          
+                <div class="form-floating pt-3 pb-3" >
+                  <textarea class="form-control" id="assessment" name="assessment" placeholder="Assessment"></textarea>
+                  <label for="assessment">Assessment</label>
+                </div>
+
+                <div class="form-floating pb-3" >
+                  <textarea class="form-control" id="plan" name="plan" placeholder="Plan"></textarea>
+                  <label for="plan">Plan</label>
+                </div>
+
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon2">TE</span>
+                  <input type="text" class="form-control"  >
+                  <span class="input-group-text" id="basic-addon">TA</span>
+                  <input type="text" class="form-control"   >
+                  <span class="input-group-text" id="basic-addon2">Manual</span>
+                  <input type="text" class="form-control"  >
+                  <span class="input-group-text" id="basic-addon">NMRE</span>
+                  <input type="text" class="form-control"   >
+                </div>
+
+  
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="saveChanges">Save Changes</button>
       </div>
     </div>
   </div>
+</div>
     
    
     <script>

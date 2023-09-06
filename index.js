@@ -103,10 +103,10 @@ function updatePersonInLocalStorage(updatedPerson) {
       
 
       if (response.ok) {
-        const dataN = await response
+        newArray =  response
         // Assuming the data from the server is an array of objects with 'name', 'date', 'start', and 'end' properties
         // Push the data into personsArray
-        newArray.push(...dataN);
+        
         newArray.forEach (function (item) {
          console.log(item)})
        

@@ -100,13 +100,15 @@ function updatePersonInLocalStorage(updatedPerson) {
     try {
       const response = await fetch(url);
   
+      
+
       if (response.ok) {
-        newArray= await response.json();
+        const data = await response.json();
         // Assuming the data from the server is an array of objects with 'name', 'date', 'start', and 'end' properties
-       // Push the data into personsArray
-        console.log(newArray); // Log the data received from the server
-  
-        // Loop through personsArray and create table rows
+        // Push the data into personsArray
+        newArray.push(...data);
+        newArray.forEach (function (item) {
+         console.log(item)})
        
       } else {
         throw new Error('Request failed with status: ' + response.status);

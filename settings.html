@@ -200,8 +200,7 @@
 // Get the table body element
 const personTableBody = document.getElementById('personTableBody');
 const personsArray = JSON.parse(localStorage.getItem('personsArray'));
-var parr = JSON.parse(newArray);
-parr.forEach((person, index) => {
+newArray.forEach((person, index) => {
           var row = document.createElement('tr');
           row.innerHTML = `
             <td>${person.name}</td>
@@ -232,7 +231,7 @@ personsArray.forEach((person, index) => {
 });
 
 function openEditModal(index) {
-  const person = personsArray[index];
+  var person = personsArray[index];
   const editForm = document.getElementById('editForm');
 
   // Populate the form fields with person's data

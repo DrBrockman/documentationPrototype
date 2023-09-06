@@ -200,7 +200,7 @@
 // Get the table body element
 const personTableBody = document.getElementById('personTableBody');
 const personsArray = JSON.parse(localStorage.getItem('personsArray'));
-newArray.forEach((person, index) => {
+newArray.people.forEach(item => {
           var row = document.createElement('tr');
           row.innerHTML = `
             <td>${person.name}</td>

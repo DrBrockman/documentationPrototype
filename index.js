@@ -22,7 +22,7 @@ var data;
    const db = firebase.firestore();
 
 async function getDataAndPopulateTable() {
-    const url = 'https://script.google.com/macros/s/AKfycbxqBB1SPDUV3Cd-3_NuHvSUxIckB4wFvu0lQwFa0msXEdS5039BQ_yqI1HzKHCdne-hgA/exec';
+    const url = 'https://script.google.com/macros/s/AKfycbzTP-pDtAimUCWGi57UOaNqZFTVDMo3G5HOWGw8BlJzyOT3_i7ihVMAJngZBTe5XmzvKg/exec';
   
     try {
       const response = await fetch(url);
@@ -95,7 +95,7 @@ function updatePersonInLocalStorage(updatedPerson) {
   var newArray = []; // Create an empty array to store the data
 
   async function getit() {
-    var url = `https://script.google.com/macros/s/AKfycbyPBAWJ0hmofn1usjBHbiH5mlak0cIS1--m49g6Zn00z8h62neQsCbQMzOYCBvkU5Xe5g/exec?action=fetchSpreadsheetData`;
+    var url = `https://script.google.com/macros/s/AKfycbzTP-pDtAimUCWGi57UOaNqZFTVDMo3G5HOWGw8BlJzyOT3_i7ihVMAJngZBTe5XmzvKg/exec?action=fetchSpreadsheetData`;
   
     try {
       const response = await fetch(url);

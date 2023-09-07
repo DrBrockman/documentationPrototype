@@ -34,8 +34,8 @@ async function getDataAndPopulateTable() {
     }
   }
   getDataAndPopulateTable();
-  function getIt () {
-    newArray.forEach(item => {
+  function getIt() {
+    newArray.forEach((item, index) => {
       var row = document.createElement('tr');
       row.innerHTML = `
         <td>${item.name}</td>
@@ -43,13 +43,14 @@ async function getDataAndPopulateTable() {
         <td>${item.start}</td>
         <td>${item.end}</td>
       `;
-
+  
       // Attach a click event listener to each row
       row.addEventListener('click', () => openEditModal(index));
-
+  
       personTableBody.appendChild(row);
     });
   }
+  
   function poptable () {
   // Get the tbody element by its class name
   const tbody = document.querySelector('.bod');

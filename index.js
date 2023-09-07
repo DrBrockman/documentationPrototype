@@ -17,6 +17,7 @@ const firebaseConfig = {
     measurementId: "G-G9XERCCSJ2"
   };
 var data;
+var newArray;
    // Initialize Firebase
    firebase.initializeApp(firebaseConfig);
    const db = firebase.firestore();
@@ -109,7 +110,7 @@ function updatePersonInLocalStorage(updatedPerson) {
     // Save the modified data back to localStorage
     localStorage.setItem("pt", JSON.stringify(people));
   }
-  var newArray = []; // Create an empty array to store the data
+  
 
   async function getit() {
     var url = `https://script.google.com/macros/s/AKfycbyPBAWJ0hmofn1usjBHbiH5mlak0cIS1--m49g6Zn00z8h62neQsCbQMzOYCBvkU5Xe5g/exec?action=fetchSpreadsheetData`;

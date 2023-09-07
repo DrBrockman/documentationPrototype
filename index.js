@@ -35,13 +35,13 @@ async function getDataAndPopulateTable() {
   }
   getDataAndPopulateTable();
   function getIt () {
-    newArray.people.forEach(person => {
+    newArray.people.forEach(item => {
       var row = document.createElement('tr');
       row.innerHTML = `
-        <td>${person.name}</td>
-        <td>${person.date}</td>
-        <td>${person.start}</td>
-        <td>${person.end}</td>
+        <td>${item.name}</td>
+        <td>${item.date}</td>
+        <td>${item.start}</td>
+        <td>${item.end}</td>
       `;
 
       // Attach a click event listener to each row

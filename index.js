@@ -36,7 +36,7 @@ async function getDataAndPopulateTable() {
   }
   getDataAndPopulateTable();
   function getIt() {
-    newArray.forEach((item, index) => {
+    newArray.people.forEach((item, index) => {
       var row = document.createElement('tr');
       row.innerHTML = `
         <td>${item.name}</td>

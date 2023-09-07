@@ -115,11 +115,11 @@ function updatePersonInLocalStorage(updatedPerson) {
   
     try {
       const response = await fetch(url);
-      
+      newArray = await response.json();
       
 
       if (response.ok) {
-        newArray =  response
+        
         console.log(newArray)
         
       

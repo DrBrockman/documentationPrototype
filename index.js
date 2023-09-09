@@ -22,6 +22,45 @@ var newArray;
    firebase.initializeApp(firebaseConfig);
    const db = firebase.firestore();
 
+
+function sendDataToGoogleAppsScript() {
+    // Define the data you want to send as an array of objects
+    var dataToSend = [
+      {
+        name: "jooooooooon",
+        date: "2023-09-08",
+        start: "09:00 PM",
+        end: "05:00 PM",
+        soft: "nahhhhh",
+        dryn: "No",
+        mobbin: "Yes",
+        assessment: "Good",
+        plan: "None",
+      },
+      {
+        name: "pettttaaaa",
+        date: "2023-09-08",
+        start: "12:00 PM",
+        end: "01:00 PM",
+        soft: "nahhhhh",
+        dryn: "sup",
+        mobbin: "Yes",
+        assessment: "Good",
+        plan: "None",
+      },
+      // Add more data objects as needed
+    ];
+  
+    // URL of your deployed Google Apps Script web app
+    var scriptUrl = `https://script.google.com/macros/s/AKfycbyKYabNn5s-lwx8k9dbbFqHk8KEy0HsLX8OCGH3N-xxNsQS7rpBX19Umog6M5Gj-Sy5GQ/exec`; // Replace with your actual URL
+  
+    // Send a POST request to the Google Apps Script
+    fetch(scriptUrl, {
+      method: "POST",
+      
+      body: JSON.stringify(dataToSend),
+    })
+  }
 async function getDataAndPopulateTable() {
     const url = 'https://script.google.com/macros/s/AKfycbwP5LsZFA5IUQUNGLi6gQGajS4iGamnT4E8IW82OYyVnBQt4_L2Xu-gQEDmh9UZFZpbHQ/exec';
   
@@ -35,6 +74,8 @@ async function getDataAndPopulateTable() {
     }
   }
   getDataAndPopulateTable();
+
+
   function getIt() {
     newArray.people.forEach((item, index) => {
       var row = document.createElement('tr');
@@ -112,28 +153,27 @@ function updatePersonInLocalStorage(updatedPerson) {
   }
   
 
+  var newArray 
+       
   async function getit() {
-    var url = `https://script.google.com/macros/s/AKfycbyPBAWJ0hmofn1usjBHbiH5mlak0cIS1--m49g6Zn00z8h62neQsCbQMzOYCBvkU5Xe5g/exec?action=fetchSpreadsheetData`;
-  
+    var url = `https://script.google.com/macros/s/AKfycbyKYabNn5s-lwx8k9dbbFqHk8KEy0HsLX8OCGH3N-xxNsQS7rpBX19Umog6M5Gj-Sy5GQ/exec?action=fetchSpreadsheetData`;
     try {
       const response = await fetch(url);
       newArray = await response.json();
-      
-
-      if (response.ok) {
-        
-        console.log(newArray)
-        
-      
-
-      } else {
-        throw new Error('Request failed with status: ' + response.status);
-      }
+  newArray.people.forEach((Object => {  personsArray.push(Object);  } ))
+     
+        console.log(newArray);
+  
+   
+       
+  
+        // Update the table to reflect the changes
+        updateTable();
+     
     } catch (error) {
       console.error(error); // Handle any errors
     }
   }
-  getit();
 
 $(document).ready(function() {
     // Load default content

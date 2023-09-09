@@ -254,7 +254,7 @@ function openEditModal(index) {
 
 
 
-const saveChangesButton = document.getElementById('saveChanges');
+var saveChangesButton = document.getElementById('saveChanges');
 saveChangesButton.addEventListener('click', () => {
   const editForm = document.getElementById('editForm');
   const index = editForm.getAttribute('data-person-index');
@@ -273,7 +273,7 @@ saveChangesButton.addEventListener('click', () => {
   // Update other fields as needed
 
   // Save the updated array back to local storage
-  localStorage.setItem('personsArray', JSON.stringify(personsArray));
+  //localStorage.setItem('personsArray', JSON.stringify(personsArray));
 
   // Close the modal
   $('#editModal').modal('hide');

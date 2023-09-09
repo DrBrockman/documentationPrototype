@@ -198,11 +198,13 @@
 ]));
 }
 // Get the table body element
-var personTableBody = document.getElementById('personTableBody');
+//var personTableBody = document.getElementById('personTableBody');
 //onst personsArray = JSON.parse(localStorage.getItem('personsArray'));
 
 // Loop through the array and populate the table rows
 personsArray.forEach((person, index) => {
+  var personTableBody = document.getElementById('personTableBody');
+
   var row = document.createElement('tr');
   row.innerHTML = `
     <td>${person.name}</td>
@@ -281,6 +283,8 @@ saveChangesButton.addEventListener('click', () => {
 });
 function updateTable() {
   // Clear the existing table rows
+  var personTableBody = document.getElementById('personTableBody');
+
   personTableBody.innerHTML = '';
 
   // Repopulate the table rows

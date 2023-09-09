@@ -1,315 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head></head>
     <style>
-       .btn-activeF {
-    background-color: #007bff;
-    color: white;
+        	-------------------------------------------------- */
+body {
+	font-family: 'Open Sans', sans-serif;
+	color: #353535;
 }
-      </style>
-</head>
+.content h1 {
+	text-align: center;
+}
+.content .content-footer p {
+	color: #6d6d6d;
+    font-size: 12px;
+    text-align: center;
+}
+.content .content-footer p a {
+	color: inherit;
+	font-weight: bold;
+}
+
+/*	--------------------------------------------------
+	:: Table Filter
+	-------------------------------------------------- */
+.panel {
+	border: 1px solid #ddd;
+	background-color: #fcfcfc;
+}
+.panel .btn-group {
+	margin: 15px 0 30px;
+}
+.panel .btn-group .btn {
+	transition: background-color .3s ease;
+}
+.table-filter {
+	background-color: #fff;
+	border-bottom: 1px solid #eee;
+}
+.table-filter tbody tr:hover {
+	cursor: pointer;
+	background-color: #eee;
+}
+.table-filter tbody tr td {
+	padding: 10px;
+	vertical-align: middle;
+	border-top-color: #eee;
+}
+.table-filter tbody tr.selected td {
+	background-color: #eee;
+}
+.table-filter tr td:first-child {
+	width: 38px;
+}
+.table-filter tr td:nth-child(2) {
+	width: 35px;
+}
+.ckbox {
+	position: relative;
+}
+.ckbox input[type="checkbox"] {
+	opacity: 0;
+}
+.ckbox label {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.ckbox label:before {
+	content: '';
+	top: 1px;
+	left: 0;
+	width: 18px;
+	height: 18px;
+	display: block;
+	position: absolute;
+	border-radius: 2px;
+	border: 1px solid #bbb;
+	background-color: #fff;
+}
+.ckbox input[type="checkbox"]:checked + label:before {
+	border-color: #2BBCDE;
+	background-color: #2BBCDE;
+}
+.ckbox input[type="checkbox"]:checked + label:after {
+	top: 3px;
+	left: 3.5px;
+	content: '\e013';
+	color: #fff;
+	font-size: 11px;
+	font-family: 'Glyphicons Halflings';
+	position: absolute;
+}
+.table-filter .star {
+	color: #ccc;
+	text-align: center;
+	display: block;
+}
+.table-filter .star.star-checked {
+	color: #F0AD4E;
+}
+.table-filter .star:hover {
+	color: #ccc;
+}
+.table-filter .star.star-checked:hover {
+	color: #F0AD4E;
+}
+.table-filter .media-photo {
+	width: 35px;
+}
+.table-filter .media-body {
+    display: block;
+    /* Had to use this style to force the div to expand (wasn't necessary with my bootstrap version 3.3.6) */
+}
+.table-filter .media-meta {
+	font-size: 11px;
+	color: #999;
+}
+.table-filter .media .title {
+	color: #2BBCDE;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: normal;
+	margin: 0;
+}
+.table-filter .media .title span {
+	font-size: .8em;
+	margin-right: 20px;
+}
+.table-filter .media .title span.pagado {
+	color: #5cb85c;
+}
+.table-filter .media .title span.pendiente {
+	color: #f0ad4e;
+}
+.table-filter .media .title span.cancelado {
+	color: #d9534f;
+}
+.table-filter .media .summary {
+	font-size: 14px;
+}
+    </style>
 <body>
+<div class="container">
+	<div class="row">
 
-  <div class="container mt-5">
-    <h1>Person List</h1>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Date</th>
-          <th>Start</th>
-          <th>End</th>
-        </tr>
-      </thead>
-      <tbody id="personTableBody">
-        <!-- JavaScript will populate rows here -->
-      </tbody>
-    </table>
-  </div>
-  
- <!-- Modal for editing person details -->
- <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog " role="document">
-    <div class="modal-content">
-      <div class="modal-header ">
-        <h5 class="modal-title">Edit Person Details</h5>
-        
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true"></span>
-        </button>
-      </div>
-      <div class="modal-body">
-        
-        <form id="editForm">
-          
-          
-            
-              
-                <div class="row g-3">
-                  <div class="col-6">
-                    <div class="form-group">
-                      <label for="name">Name</label>
-                      <input type="text" class="form-control" id="name" name="name">
-                    </div>
-                  </div>
-                  <div class="col">
-                    <label for="start">Start</label>
-                    <input type="text" class="form-control" id="start" aria-label="First name">
-                  </div>
-                  <div class="col">
-                    <label for="end">End</label>
-                    <input type="text" class="form-control" id="end" aria-label="Last name">
-                  </div>
-                </div>
-                
-                <div class="form-floating pb-3 pt-3" >
-                  <textarea class="form-control" id="subjective" name="subjective" placeholder="Subjective"></textarea>
-                  <label for="subjective">Subjective</label>
-                </div>
-                
-                <div class="btn-group w-100 pb-1" role="group" aria-label="Basic radio toggle button group">
-                  <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent1" aria-expanded="false" aria-controls="collapseContent1">Functional</button>
-                  <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent2" aria-expanded="false" aria-controls="collapseContent2">Soft Tissue</button>
-                  <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent3" aria-expanded="false" aria-controls="collapseContent3">Joint</button>
-                  <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent4" aria-expanded="false" aria-controls="collapseContent4">Dry Needle</button>
-                </div>
-              
-                <div class="collapse collapse-content" id="collapseContent1">
-                  <div class="d-flex flex-wrap gap-1" >
-                    <input type="checkbox" class=" btn-check " id="btnCheck1" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnCheck1">ADL</label>
-                  
-                    <input type="checkbox" class=" btn-check" id="btnCheck2" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnCheck2">Balance</label>
-                  
-                    <input type="checkbox" class="btn-check" id="btnCheck3" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnCheck3">Endurance</label>
-                    <input type="checkbox" class=" btn-check" id="btnCheck4" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnCheck4">Ergonomics</label>
-                    <input type="checkbox" class="btn-check" id="btnCheck5" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnCheck5">Gait</label>
-                    <input type="checkbox" class="btn-check" id="btnCheck6" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnCheck6">Posture</label> 
-                    <input type="checkbox" class="btn-check" id="btnCheck7" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnCheck7">Athletics</label>
-                    <input type="checkbox" class="btn-check" id="btnCheck8" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnCheck8">Transfers</label>
-                    <input type="checkbox" class="btn-check" id="btnCheck9" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnCheck9">Work Task</label>
-                  </div>
-                </div>
-
-                <div class="collapse collapse-content" id="collapseContent2">
-                  <div class="form-floating pb-3" >
-                    <textarea class="form-control" id="softy" name="softy" placeholder="Soft Tissue"></textarea>
-                    <label for="softy">Soft Tissue</label>
-                  </div>
-                </div>
-
-
-                <div class="collapse collapse-content" id="collapseContent3">
-                  <div class="form-floating pb-3" >
-                    <textarea class="form-control" id="mob" name="mob" placeholder="Joint Mobilization"></textarea>
-                    <label for="mob">Joint Mobilization</label>
-                  </div>
-                </div>
-                
-                <div class="collapse collapse-content" id="collapseContent4">
-                  <div class="form-floating pb-3" >
-                    <textarea class="form-control" id="dn" name="dn" placeholder="Dry Needling"></textarea>
-                    <label for="dn">Dry Needling</label>
-                  </div>
-                </div>
-
-          
-                <div class="form-floating pt-3 pb-3" >
-                  <textarea class="form-control" id="assessment" name="assessment" placeholder="Assessment"></textarea>
-                  <label for="assessment">Assessment</label>
-                </div>
-
-                <div class="form-floating pb-3" >
-                  <textarea class="form-control" id="plan" name="plan" placeholder="Plan"></textarea>
-                  <label for="plan">Plan</label>
-                </div>
-
-                <div class="input-group mb-3">
-                  <span class="input-group-text" id="basic-addon2">TE</span>
-                  <input type="text" class="form-control"  >
-                  <span class="input-group-text" id="basic-addon">TA</span>
-                  <input type="text" class="form-control"   >
-                  <span class="input-group-text" id="basic-addon2">Manual</span>
-                  <input type="text" class="form-control"  >
-                  <span class="input-group-text" id="basic-addon">NMRE</span>
-                  <input type="text" class="form-control"   >
-                </div>
-
-  
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" id="saveChanges">Save Changes</button>
-      </div>
-    </div>
-  </div>
+		<section class="content">
+			<h1>Table Filter</h1>
+			<div class="col-md-8 col-md-offset-2">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="pull-right">
+							<div class="btn-group">
+								<button type="button" class="btn btn-success btn-filter" data-target="pagado">Pagado</button>
+								<button type="button" class="btn btn-warning btn-filter" data-target="pendiente">Pendiente</button>
+								<button type="button" class="btn btn-danger btn-filter" data-target="cancelado">Cancelado</button>
+								<button type="button" class="btn btn-default btn-filter" data-target="all">All</button>
+							</div>
+						</div>
+						<div class="table-container">
+							<table class="table table-filter">
+								<tbody>
+									<tr data-status="pagado">
+										<td>
+											<div class="ckbox">
+												<input type="checkbox" id="checkbox1">
+												<label for="checkbox1"></label>
+											</div>
+										</td>
+										<td>
+											<a href="javascript:;" class="star">
+												<i class="glyphicon glyphicon-star"></i>
+											</a>
+										</td>
+										<td>
+											<div class="media">
+												<a href="#" class="pull-left">
+													<img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo">
+												</a>
+												<div class="media-body">
+													<span class="media-meta pull-right">Febrero 13, 2016</span>
+													<h4 class="title">
+														Lorem Impsum
+														<span class="pull-right pagado">(Pagado)</span>
+													</h4>
+													<p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...</p>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr data-status="pendiente">
+										<td>
+											<div class="ckbox">
+												<input type="checkbox" id="checkbox3">
+												<label for="checkbox3"></label>
+											</div>
+										</td>
+										<td>
+											<a href="javascript:;" class="star">
+												<i class="glyphicon glyphicon-star"></i>
+											</a>
+										</td>
+										<td>
+											<div class="media">
+												<a href="#" class="pull-left">
+													<img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo">
+												</a>
+												<div class="media-body">
+													<span class="media-meta pull-right">Febrero 13, 2016</span>
+													<h4 class="title">
+														Lorem Impsum
+														<span class="pull-right pendiente">(Pendiente)</span>
+													</h4>
+													<p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...</p>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr data-status="cancelado">
+										<td>
+											<div class="ckbox">
+												<input type="checkbox" id="checkbox2">
+												<label for="checkbox2"></label>
+											</div>
+										</td>
+										<td>
+											<a href="javascript:;" class="star">
+												<i class="glyphicon glyphicon-star"></i>
+											</a>
+										</td>
+										<td>
+											<div class="media">
+												<a href="#" class="pull-left">
+													<img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo">
+												</a>
+												<div class="media-body">
+													<span class="media-meta pull-right">Febrero 13, 2016</span>
+													<h4 class="title">
+														Lorem Impsum
+														<span class="pull-right cancelado">(Cancelado)</span>
+													</h4>
+													<p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...</p>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr data-status="pagado" class="selected">
+										<td>
+											<div class="ckbox">
+												<input type="checkbox" id="checkbox4" checked>
+												<label for="checkbox4"></label>
+											</div>
+										</td>
+										<td>
+											<a href="javascript:;" class="star star-checked">
+												<i class="glyphicon glyphicon-star"></i>
+											</a>
+										</td>
+										<td>
+											<div class="media">
+												<a href="#" class="pull-left">
+													<img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo">
+												</a>
+												<div class="media-body">
+													<span class="media-meta pull-right">Febrero 13, 2016</span>
+													<h4 class="title">
+														Lorem Impsum
+														<span class="pull-right pagado">(Pagado)</span>
+													</h4>
+													<p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...</p>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr data-status="pendiente">
+										<td>
+											<div class="ckbox">
+												<input type="checkbox" id="checkbox5">
+												<label for="checkbox5"></label>
+											</div>
+										</td>
+										<td>
+											<a href="javascript:;" class="star">
+												<i class="glyphicon glyphicon-star"></i>
+											</a>
+										</td>
+										<td>
+											<div class="media">
+												<a href="#" class="pull-left">
+													<img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo">
+												</a>
+												<div class="media-body">
+													<span class="media-meta pull-right">Febrero 13, 2016</span>
+													<h4 class="title">
+														Lorem Impsum
+														<span class="pull-right pendiente">(Pendiente)</span>
+													</h4>
+													<p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...</p>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</section>
+		
+	</div>
 </div>
-    
-   
-    <script>
-       
-   // Function to get people array from local storage
-   if (!localStorage.getItem('personsArray')) {
-  localStorage.setItem('personsArray', JSON.stringify([
-  {
-    name: "John Doe",
-    date: "2023-08-23",
-    start: "09:00 AM",
-    end: "11:00 AM",
-    softy: "Soft example data 1",
-    dn: "Dryn example data 1",
-    mob: "Mobbin example data 1",
-    assessment: "Assessment example data 1",
-    plan: "Plan example data 1"
-  },
-  {
-    name: "Jane Smith",
-    date: "2023-08-24",
-    start: "02:00 PM",
-    end: "04:00 PM",
-    softy: "Soft example data 2",
-    dn: "Dryn example data 2",
-    mob: "Mobbin example data 2",
-    assessment: "Assessment example data 2",
-    plan: "Plan example data 2"
-  },
-  {
-    name: "Michael Johnson",
-    date: "2023-08-25",
-    start: "10:30 AM",
-    end: "12:30 PM",
-    softy: "Soft example data 3",
-    dn: "Dryn example data 3",
-    mob: "Mobbin example data 3",
-    assessment: "Assessment example data 3",
-    plan: "Plan example data 3"
+</body>
+<script>
+    $(document).ready(function () {
+
+$('.star').on('click', function () {
+  $(this).toggleClass('star-checked');
+});
+
+$('.ckbox label').on('click', function () {
+  $(this).parents('tr').toggleClass('selected');
+});
+
+$('.btn-filter').on('click', function () {
+  var $target = $(this).data('target');
+  if ($target != 'all') {
+    $('.table tr').css('display', 'none');
+    $('.table tr[data-status="' + $target + '"]').fadeIn('slow');
+  } else {
+    $('.table tr').css('display', 'none').fadeIn('slow');
   }
-]));
-}
-// Get the table body element
-const personTableBody = document.getElementById('personTableBody');
-const personsArray = JSON.parse(localStorage.getItem('personsArray'));
-
-// Loop through the array and populate the table rows
-personsArray.forEach((person, index) => {
-  var row = document.createElement('tr');
-  row.innerHTML = `
-    <td>${person.name}</td>
-    <td>${person.date}</td>
-    <td>${person.start}</td>
-    <td>${person.end}</td>
-  `;
-
-  // Attach a click event listener to each row
-  row.addEventListener('click', () => openEditModal(index));
-
-  personTableBody.appendChild(row);
 });
 
-function openEditModal(index) {
-    const person = personsArray[index];
-    
-    if (!person) {
-        console.error("No person found for the given index:", index);
-        return;
-    }
-
-    const editForm = document.getElementById('editForm');
-    
-    if (!editForm) {
-        console.error("Edit form not found!");
-        return;
-    }
-
-    // Check for each input before setting its value
-    if (editForm.name) editForm.name.value = person.name || "";
-    if (editForm.start) editForm.start.value = person.start || "";
-    if (editForm.end) editForm.end.value = person.end || "";
-    if (editForm.subjective) editForm.subjective.value = person.subjective || "";
-    if (editForm.soft) editForm.soft.value = person.soft || "";
-    if (editForm.dryn) editForm.dryn.value = person.dryn || "";
-    if (editForm.mobbin) editForm.mobbin.value = person.mobbin || "";
-    if (editForm.assessment) editForm.assessment.value = person.assessment || "";
-    if (editForm.plan) editForm.plan.value = person.plan || "";
-
-    // Show the modal
-    $('#editModal').modal('show');
-
-    // Save the index of the person being edited
-    editForm.setAttribute('data-person-index', index);
-}
-
-
-
-const saveChangesButton = document.getElementById('saveChanges');
-saveChangesButton.addEventListener('click', () => {
-  const editForm = document.getElementById('editForm');
-  const index = editForm.getAttribute('data-person-index');
-
-  // Update the person's data in the array
-  personsArray[index].name = editForm.name.value;
-  personsArray[index].start = editForm.start.value;
-  personsArray[index].end = editForm.end.value;
-  personsArray[index].subjective = editForm.subjective.value;
-  personsArray[index].softy = editForm.softy.value;
-  personsArray[index].dn = editForm.dn.value;
-  personsArray[index].mob = editForm.mob.value;
-  personsArray[index].assessment = editForm.assessment.value;
-  personsArray[index].plan = editForm.plan.value;
-  
-  // Update other fields as needed
-
-  // Save the updated array back to local storage
-  localStorage.setItem('personsArray', JSON.stringify(personsArray));
-
-  // Close the modal
-  $('#editModal').modal('hide');
-
-  // Update the table to reflect the changes
-  updateTable();
 });
-function updateTable() {
-  // Clear the existing table rows
-  personTableBody.innerHTML = '';
-
-  // Repopulate the table rows
-  personsArray.forEach((person, index) => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${person.name}</td>
-      <td>${person.date}</td>
-      <td>${person.start}</td>
-      <td>${person.end}</td>
-    `;
-
-    // Attach a click event listener to each row
-    row.addEventListener('click', () => openEditModal(index));
-
-    personTableBody.appendChild(row);
-  });
-}
-$('.collapse-button').on('click', function() {
-        // Toggle active class for the clicked button
-        $(this).toggleClass('btn-activeF');
-
-        // Remove active class from other buttons
-        $('.collapse-button').not(this).removeClass('btn-activeF');
-
-        // Hide other collapse contents
-        $('.collapse-content').not($(this).attr('data-target')).collapse('hide');
-    });
-getit();
 </script>
-    
 </html>

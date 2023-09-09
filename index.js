@@ -153,13 +153,13 @@ function updatePersonInLocalStorage(updatedPerson) {
        
   
         // Update the table to reflect the changes
-        updateTable();
+        //updateTable();
      
     } catch (error) {
       console.error(error); // Handle any errors
     }
   }
-
+getit();
 $(document).ready(function() {
     // Load default content
     loadContent('dictate');

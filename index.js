@@ -18,6 +18,7 @@ const firebaseConfig = {
   };
 var data;
 var newArray;
+var personsArray = [];
    // Initialize Firebase
    firebase.initializeApp(firebaseConfig);
    const db = firebase.firestore();

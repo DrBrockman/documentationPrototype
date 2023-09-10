@@ -4,7 +4,7 @@ if (!localStorage.getItem('pt'))
     
     
 }
-var people = JSON.parse(localStorage.getItem('pt'))
+var personsArray = JSON.parse(localStorage.getItem('pt'))
 
 const firebaseConfig = {
     apiKey: "AIzaSyBk2Uc6NfC9itI5eUMN7xdMyFkkdVb5VxU",
@@ -18,52 +18,15 @@ const firebaseConfig = {
   };
 var data;
 var newArray;
-var personsArray = [];
+//var personsArray = [];
    // Initialize Firebase
    firebase.initializeApp(firebaseConfig);
    const db = firebase.firestore();
 
 
-function sendDataToGoogleAppsScript() {
-    // Define the data you want to send as an array of objects
-    var dataToSend = [
-      {
-        name: "jooooooooon",
-        date: "2023-09-08",
-        start: "09:00 PM",
-        end: "05:00 PM",
-        soft: "nahhhhh",
-        dryn: "No",
-        mobbin: "Yes",
-        assessment: "Good",
-        plan: "None",
-      },
-      {
-        name: "pettttaaaa",
-        date: "2023-09-08",
-        start: "12:00 PM",
-        end: "01:00 PM",
-        soft: "nahhhhh",
-        dryn: "sup",
-        mobbin: "Yes",
-        assessment: "Good",
-        plan: "None",
-      },
-      // Add more data objects as needed
-    ];
-  
-    // URL of your deployed Google Apps Script web app
-    var scriptUrl = `https://script.google.com/macros/s/AKfycbyKYabNn5s-lwx8k9dbbFqHk8KEy0HsLX8OCGH3N-xxNsQS7rpBX19Umog6M5Gj-Sy5GQ/exec`; // Replace with your actual URL
-  
-    // Send a POST request to the Google Apps Script
-    fetch(scriptUrl, {
-      method: "POST",
-      
-      body: JSON.stringify(dataToSend),
-    })
-  }
+
 async function getDataAndPopulateTable() {
-    const url = 'https://script.google.com/macros/s/AKfycbwP5LsZFA5IUQUNGLi6gQGajS4iGamnT4E8IW82OYyVnBQt4_L2Xu-gQEDmh9UZFZpbHQ/exec';
+    const url = 'https://script.google.com/macros/s/AKfycbyduPifAtND8lwhJXW1RC_HZnOBJggZJ6qc4nfVldzVqylq-9mZgjxLGBujcktwrjgcLg/exec';
   
     try {
       const response = await fetch(url);
@@ -159,18 +122,49 @@ function updatePersonInLocalStorage(updatedPerson) {
     localStorage.setItem("pt", JSON.stringify(people));
   }
   
+  function openEditModal(index) {
+    const person = personsArray[index];
+    
+    if (!person) {
+        console.error("No person found for the given index:", index);
+        return;
+    }
 
+    const editForm = document.getElementById('editForm');
+    
+    if (!editForm) {
+        console.error("Edit form not found!");
+        return;
+    }
+
+    // Check for each input before setting its value
+    if (editForm.name) editForm.name.value = person.name || "";
+    if (editForm.start) editForm.start.value = person.start || "";
+    if (editForm.end) editForm.end.value = person.end || "";
+    if (editForm.subjective) editForm.subjective.value = person.subjective || "";
+    if (editForm.soft) editForm.soft.value = person.soft || "";
+    if (editForm.dryn) editForm.dryn.value = person.dryn || "";
+    if (editForm.mobbin) editForm.mobbin.value = person.mobbin || "";
+    if (editForm.assessment) editForm.assessment.value = person.assessment || "";
+    if (editForm.plan) editForm.plan.value = person.plan || "";
+
+    // Show the modal
+    $('#editModal').modal('show');
+
+    // Save the index of the person being edited
+    editForm.setAttribute('data-person-index', index);
+}
  
        
   async function getit() {
-    var url = `https://script.google.com/macros/s/AKfycbyKYabNn5s-lwx8k9dbbFqHk8KEy0HsLX8OCGH3N-xxNsQS7rpBX19Umog6M5Gj-Sy5GQ/exec?action=fetchSpreadsheetData`;
+    var url = `https://script.google.com/macros/s/AKfycbyduPifAtND8lwhJXW1RC_HZnOBJggZJ6qc4nfVldzVqylq-9mZgjxLGBujcktwrjgcLg/exec?action=fetchSpreadsheetData`;
     try {
       const response = await fetch(url);
       newArray = await response.json();
   newArray.people.forEach((Object => {  personsArray.push(Object);  } ))
      
         console.log(newArray);
-  
+        localStorage.setItem("pt", JSON.stringify(personsArray));
    
        
   

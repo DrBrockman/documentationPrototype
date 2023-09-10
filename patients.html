@@ -203,38 +203,7 @@
 
 
 
-function openEditModal(index) {
-    const person = personsArray[index];
-    
-    if (!person) {
-        console.error("No person found for the given index:", index);
-        return;
-    }
 
-    const editForm = document.getElementById('editForm');
-    
-    if (!editForm) {
-        console.error("Edit form not found!");
-        return;
-    }
-
-    // Check for each input before setting its value
-    if (editForm.name) editForm.name.value = person.name || "";
-    if (editForm.start) editForm.start.value = person.start || "";
-    if (editForm.end) editForm.end.value = person.end || "";
-    if (editForm.subjective) editForm.subjective.value = person.subjective || "";
-    if (editForm.soft) editForm.soft.value = person.soft || "";
-    if (editForm.dryn) editForm.dryn.value = person.dryn || "";
-    if (editForm.mobbin) editForm.mobbin.value = person.mobbin || "";
-    if (editForm.assessment) editForm.assessment.value = person.assessment || "";
-    if (editForm.plan) editForm.plan.value = person.plan || "";
-
-    // Show the modal
-    $('#editModal').modal('show');
-
-    // Save the index of the person being edited
-    editForm.setAttribute('data-person-index', index);
-}
 
 
 
@@ -257,7 +226,7 @@ saveChangesButton.addEventListener('click', () => {
   // Update other fields as needed
 
   // Save the updated array back to local storage
-  localStorage.setItem('personsArray', JSON.stringify(personsArray));
+  localStorage.setItem('pt', JSON.stringify(personsArray));
 
   // Close the modal
   $('#editModal').modal('hide');

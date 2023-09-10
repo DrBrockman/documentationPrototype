@@ -164,7 +164,7 @@ function updatePersonInLocalStorage(updatedPerson) {
   newArray.people.forEach((Object => {  personsArray.push(Object);  } ))
      
         console.log(newArray);
-  
+        localStorage.setItem("pt", JSON.stringify(personsArray));
    
        
   
@@ -225,4 +225,6 @@ const checkboxes = document.querySelectorAll('input[name="options"]');
 
 
         }
+
+        
     

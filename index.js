@@ -77,7 +77,28 @@ async function getDataAndPopulateTable() {
   getDataAndPopulateTable();
 
 
- 
+  function updateTable() {
+    // Clear the existing table rows
+    var personTableBody = document.getElementById('personTableBody');
+  
+    personTableBody.innerHTML = '';
+  
+    // Repopulate the table rows
+    personsArray.forEach((person, index) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${person.name}</td>
+        <td>${person.date}</td>
+        <td>${person.start}</td>
+        <td>${person.end}</td>
+      `;
+  
+      // Attach a click event listener to each row
+      row.addEventListener('click', () => openEditModal(index));
+  
+      personTableBody.appendChild(row);
+    });
+  }
   
   function poptable () {
   // Get the tbody element by its class name
@@ -139,7 +160,7 @@ function updatePersonInLocalStorage(updatedPerson) {
   }
   
 
-  var newArray 
+ 
        
   async function getit() {
     var url = `https://script.google.com/macros/s/AKfycbyKYabNn5s-lwx8k9dbbFqHk8KEy0HsLX8OCGH3N-xxNsQS7rpBX19Umog6M5Gj-Sy5GQ/exec?action=fetchSpreadsheetData`;

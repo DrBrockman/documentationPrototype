@@ -156,25 +156,41 @@ function updatePersonInLocalStorage(updatedPerson) {
 }
  
        
-  async function getit() {
-    var url = `https://script.google.com/macros/s/AKfycbyduPifAtND8lwhJXW1RC_HZnOBJggZJ6qc4nfVldzVqylq-9mZgjxLGBujcktwrjgcLg/exec?action=fetchSpreadsheetData`;
-    try {
-      const response = await fetch(url);
-      newArray = await response.json();
-  newArray.people.forEach((Object => {  personsArray.push(Object);  } ))
-     
-        console.log(newArray);
-        localStorage.setItem("pt", JSON.stringify(personsArray));
-   
+async function getit() {
+  var url = `https://script.google.com/macros/s/AKfycbyduPifAtND8lwhJXW1RC_HZnOBJggZJ6qc4nfVldzVqylq-9mZgjxLGBujcktwrjgcLg/exec?action=fetchSpreadsheetData`;
+  try {
+    const response = await fetch(url);
+    const newArray = await response.json();
+
+    newArray.people.forEach((newObject) => {
+      // Convert the "date" field to a string
+      const newDateString = newObject.date.toString();
+
+      // Check if an object with the same name and date already exists in personsArray
+      const existingObjectIndex = personsArray.findIndex((person) => {
+        // Convert the "date" field in personsArray to a string for comparison
+        const personDateString = person.date.toString();
+
+        return person.name === newObject.name && personDateString === newDateString;
+      });
+
+      if (existingObjectIndex === -1) {
+        // If not found, add the new object to personsArray
+        personsArray.push(newObject);
+      } else {
        
-  
-        // Update the table to reflect the changes
-        //updateTable();
-     
-    } catch (error) {
-      console.error(error); // Handle any errors
-    }
+      }
+    });
+
+    console.log(newArray);
+    localStorage.setItem("pt", JSON.stringify(personsArray));
+
+    // Update the table to reflect the changes
+    updateTable();
+  } catch (error) {
+    console.error(error); // Handle any errors
   }
+}
 getit();
 $(document).ready(function() {
     // Load default content

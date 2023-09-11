@@ -67,12 +67,12 @@ async function getDataAndPopulateTable() {
       personTableBody.appendChild(row);
     });
   }
-  let checkedCount = 0;
+  
   function poptable() {
-    
     // Get the tbody element by its class name
     const tbody = document.querySelector('.bod');
-     // Counter to keep track of checked checkboxes
+    const badge = document.querySelector('.badge.bg-primary');
+    let checkedCount = 0; // Counter to keep track of checked checkboxes
   
     // Clear existing rows from tbody
     tbody.innerHTML = '';
@@ -104,7 +104,9 @@ async function getDataAndPopulateTable() {
       
     });
   
-    // Function to update the badge count
+    function updateBadge() {
+      badge.textContent = checkedCount > 0 ? '+' + checkedCount : '';
+    }
     
   }
   

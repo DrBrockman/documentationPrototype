@@ -43,8 +43,13 @@ async function getDataAndPopulateTable() {
   function updateTable() {
     // Clear the existing table rows
     var personTableBody = document.getElementById('personTableBody');
+    try {
+      personTableBody.innerHTML = '';
   
-    personTableBody.innerHTML = '';
+    } catch (error) {
+      
+    }
+    
   
     // Repopulate the table rows
     personsArray.forEach((person, index) => {
@@ -197,7 +202,7 @@ async function getit() {
     console.error(error); // Handle any errors
   }
 }
-getit();
+
 $(document).ready(function() {
     // Load default content
     loadContent('dictate');

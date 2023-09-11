@@ -256,7 +256,7 @@ $(".exerciseList").on("click", function(event) {
     if (!$(event.target).hasClass("fa")) { // Exclude clicks on the span element
       var checkbox = $(this).find(".form-check-input");
       checkbox.prop("checked", !checkbox.prop("checked"));
-      if (checkbox.checked) {
+      if (checkbox.prop("checked")) {
           checkedCount++;
         } else {
           checkedCount--;

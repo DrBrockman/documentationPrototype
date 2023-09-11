@@ -154,7 +154,13 @@ function updatePersonInLocalStorage(updatedPerson) {
     // Save the index of the person being edited
     editForm.setAttribute('data-person-index', index);
 }
- 
+function removePersonByIndex(index) {
+  if (index >= 0 && index < personsArray.length) {
+    personsArray.splice(index, 1); // Remove one element at the specified index
+    localStorage.setItem('pt', JSON.stringify(personsArray)); // Update local storage
+    updateTable(); // Update the table to reflect the changes
+  }
+}
        
 async function getit() {
   var url = `https://script.google.com/macros/s/AKfycbyduPifAtND8lwhJXW1RC_HZnOBJggZJ6qc4nfVldzVqylq-9mZgjxLGBujcktwrjgcLg/exec?action=fetchSpreadsheetData`;

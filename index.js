@@ -20,7 +20,7 @@ var data;
 var newArray;
 //var personsArray = [];
    // Initialize Firebase
-   firebase.initializeApp(firebaseConfig);
+   firebase.initializeApp(firebaseConfig); 
    const db = firebase.firestore();
 
 

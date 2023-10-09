@@ -9,7 +9,7 @@
         </style>
     </head>
     <body>
-        <div class="container mt-5">
+         <div class="container mt-5" style="display: none;">
             <h2>Patient</h2>
             <form id="bigyeet" class="yeet">
                 <div class="form-group">
@@ -24,80 +24,268 @@
                     <textarea class="form-control" id="bodypart" name="bodypart" rows="4"></textarea>
                     <label class="placeholder" for="bodypart">bodypart</label>
                 </div>
-               
+                
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
             <div id="notes-container"></div>
-      </div>
         </div>
+    </div>
+    <div class="go" style="display: none;">
+        <span class="vamoAlSubibaja" style="border: 1px solid black; padding: 10px;">0</span>
+        <div class="movestatus">Status: </div>
+    </div>
+    <div class="go" style="display: none;">
+        <span class="vamoAlSubibaja" style="border: 1px solid black; padding: 10px;">0</span>
+        <div class="movestatus">Status: </div>
+    </div>
+    <div class="container-fluid d-flex flex-column align-items-center"> 
+    <div contenteditable="true" id="final"> </div>
+    <input class="border-0 w-100 "  id="messagef" type="text" name="message" placeholder="..."></input>
+    <button class="btn btn-primary w-25 m-3" id="buttonhug">Send</button>
+    
+    <button class="btn btn-primary w-50 m-3 mt-5"  id="speakButton">Dic</button>
+    
+    <div id="gogo"></div>
+    <ul id="messages"></ul>
+</div>
     
     
 </body>
-    <script>
-        window.onload = async function() {
+     <script >
+   var finalResults = ""
+window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+  
+  recognition.interimResults = true;
+  recognition.continuous = true;
+
+recognition.addEventListener('result', (e) => {
+    
+    
+    const results = Array.from(e.results)
+    .map(result => result[0].transcript)
+    .join('');
+
+   var periodstr = replacePeriod(results);
+   var finalResults = capitalize(periodstr);
+   activeee = document.getElementById('messagef')
+   activeee.value = finalResults
+   final = document.getElementById('final')
+    final.innerText = finalResults
+});
+function talking () {
+    recognition.start()
+  }
+  
+function nottalking() {
+    recognition.stop()
+  }
+  const speakButton = document.getElementById('speakButton');
+
+speakButton.addEventListener('mousedown', function() {
+    talking();
+    this.classList.remove('btn-primary');
+      this.classList.add('btn-danger');
+});
+
+speakButton.addEventListener('mouseup', function() {
+    nottalking()
+    this.classList.remove('btn-danger');
+      this.classList.add('btn-primary');
+});
+speakButton.addEventListener('touchstart', function() {
+    talking();
+    this.classList.remove('btn-primary');
+      this.classList.add('btn-danger');
+});
+
+speakButton.addEventListener('touchend', function() {
+    nottalking()
+    this.classList.remove('btn-danger');
+      this.classList.add('btn-primary');
+});
+function replacePeriod(str) {
+  return str.replace(/ period/g, '.');
+}
+
+function capitalize(str) {
+  var strArray = str.split(". ");
+  var newArray = [];
+  for (var i = 0; i < strArray.length; i++) {
+    newArray.push(strArray[i].charAt(0).toUpperCase() + strArray[i].slice(1));
+  }
+  return newArray.join(". ");
+}
+function handleDragForClass(className) {
+  var dragging = false;
+  var startY = 0; // Store the initial Y position
+
+  // Function to handle drag logic
+  function handleDrag(element, valueElement, statusElement, e) {
+    var currentValue = parseInt(valueElement.html());
+    var y = currentValue;
+
+    if (e.pageY <= element.offset().top + element.height() / 10) {
+      y = currentValue + 1;
+      statusElement.text('plus');
+    } else {
+      y = Math.max(currentValue - 1, 0);
+      statusElement.text('minus');
+    }
+    valueElement.html(y);
+  }
+
+  $(document).on('mousedown touchstart', '.' + className, function (e) {
+    dragging = true;
+    startY = e.type === 'mousedown' ? e.pageY : e.originalEvent.touches[0].pageY;
+  });
+
+  $(document).on('mousemove touchmove', function (e) {
+    if (dragging) {
+      $('.' + className).each(function () {
+        var element = $(this);
+        var valueElement = element.find('span'); // Assuming the value is in a nested <span>
+        var statusElement = $('.movestatus'); // Status element (you can customize this if needed)
+
+        if (e.type === 'mousemove') {
+          handleDrag(element, valueElement, statusElement, e);
+        } else if (e.type === 'touchmove') {
+          handleDrag(element, valueElement, statusElement, e.originalEvent.touches[0]);
+        }
+      });
+    }
+  });
+
+  $(document).on('mouseup touchend', function () {
+    dragging = false;
+  });
+}
+
+// Usage example:
+
+
+
+// Usage example:
+handleDragForClass('go'); // Replace 'yourClassName' with your specific class
+function connectWebSocket() {
+const serverUrl = 'wss://socketsender.onrender.com';
+const clientName = 'AppleWatch';
+ws = new WebSocket(serverUrl);
+   
+ws.addEventListener('open', function (event) {
+        ws.send((JSON.stringify({ type: 'name', data: clientName })))
+        console.log('Connection established');
+
+
+});
+
+// listen for messages from the server
+ws.addEventListener('message', (event) => {
+  
+ 
+  var add = document.createElement('li')
+  add.innerText=`Received message: ${event.data}`
+  var list = document.getElementById('messages')
+  list.appendChild(add)
+});}
+connectWebSocket();
+function makeSimplePostRequest(url, data) {
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json', // Adjust the content type if sending a different data format
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .catch(error => {
+    throw new Error(`POST request failed: ${error.message}`);
+  });
+}
+
+const url = 'https://socketsender.onrender.com';
+// send a message to the server
+
+    
+document.getElementById('buttonhug').addEventListener("click", function(event) {
+    event.preventDefault(); 
+    //ws.send((JSON.stringify({type : 'action', context : 'click'})))
+    datasend = document.getElementById('messagef').value
+data = {type : 'textToPaste', content : datasend}
+ws.send((JSON.stringify(data)))
+  datasend = document.querySelector("#messagef").value=''
+});
+    
+        
+  //       window.onload = async function() {
     
   
-    const name = document.getElementById('name').value;
-      const age = document.getElementById('age').value;
-      const bodypart = document.getElementById('bodypart').value;
-      const notesContainer = document.getElementById('notes-container');
-      const addedNoteIds = new Set(); // Set to store added note IDs
+  //   const name = document.getElementById('name').value;
+  //     const age = document.getElementById('age').value;
+  //     const bodypart = document.getElementById('bodypart').value;
+  //     const notesContainer = document.getElementById('notes-container');
+  //     const addedNoteIds = new Set(); // Set to store added note IDs
   
-    // Your interaction code goes here
-    const documentForm = document.getElementById('bigyeet');
+  //   // Your interaction code goes here
+  //   const documentForm = document.getElementById('bigyeet');
   
   
      
           
-          await db.collection('documents').orderBy('timestamp', "asc").onSnapshot((snapshot) => {
-              snapshot.docChanges().forEach((change) => {
-                if (change.type === 'added') {
-                  const noteData = change.doc.data();
-                  const noteId = change.doc.id;
-              if (!addedNoteIds.has(noteId)) {
-                      addedNoteIds.add(noteId);
+  //         await db.collection('documents').orderBy('timestamp', "asc").onSnapshot((snapshot) => {
+  //             snapshot.docChanges().forEach((change) => {
+  //               if (change.type === 'added') {
+  //                 const noteData = change.doc.data();
+  //                 const noteId = change.doc.id;
+  //             if (!addedNoteIds.has(noteId)) {
+  //                     addedNoteIds.add(noteId);
             
                 
-                  const noteElement = document.createElement('div');
-                  noteElement.innerHTML = `
-                  <h3>${noteData.name}</h3>
-                  <p>${noteData.age}</p>
-                  <p>part: ${noteData.bodypart}</p>
-                  `;
-                  notesContainer.appendChild(noteElement);
-                }
-                // Handle other types of changes (modified, removed) if needed
-              }});
-            });
+  //                 const noteElement = document.createElement('div');
+  //                 noteElement.innerHTML = `
+  //                 <h3>${noteData.name}</h3>
+  //                 <p>${noteData.age}</p>
+  //                 <p>part: ${noteData.bodypart}</p>
+  //                 `;
+  //                 notesContainer.appendChild(noteElement);
+  //               }
+  //               // Handle other types of changes (modified, removed) if needed
+  //             }});
+  //           });
         
       
-        documentForm.addEventListener('submit', async (event) => {
-          event.preventDefault();
+  //       documentForm.addEventListener('submit', async (event) => {
+  //         event.preventDefault();
         
-      try{ 
-          var name = document.getElementById('name').value;
-      var age = document.getElementById('age').value;
-      var bodypart = document.getElementById('bodypart').value;
-          await db.collection('documents').add({
+  //     try{ 
+  //         var name = document.getElementById('name').value;
+  //     var age = document.getElementById('age').value;
+  //     var bodypart = document.getElementById('bodypart').value;
+  //         await db.collection('documents').add({
              
-          name: name,
-          age: age,
-          bodypart: bodypart,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  //         name: name,
+  //         age: age,
+  //         bodypart: bodypart,
+  //         timestamp: firebase.firestore.FieldValue.serverTimestamp()
          
-        });
+  //       });
     
         
-        documentForm.reset();
-      } catch (error) {
-        console.error('Error adding document: ', error);
-      }
-    });
+  //       documentForm.reset();
+  //     } catch (error) {
+  //       console.error('Error adding document: ', error);
+  //     }
+  //   });
   
     
   
   
   
-  };
+  // };
     </script>
 </html>

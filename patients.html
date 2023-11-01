@@ -2,26 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+   
     <style>
        .btn-activeF {
     background-color: #007bff;
     color: white;
 }
+.mobileExerciseLayout {
+    border: 1px solid #000000;
+    padding: 4px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px #ebebeb;
+   
+}
+.SR {
+    float: right;
+}
+
+.afta::after {
+  content: " LBS";
+  color: rgb(0, 0, 0);
+  font-size: 50%;
+}
+
       </style>
 </head>
 <body>
 
-  <div class="container mt-5">
+  <div class="container-fluid mt-1">
     <button class="btn btn-primary w-80" id="fetchBtn">Fetch People</button>
     <h1>Person List</h1>
     <table class="table">
       <thead>
-        <tr>
+        <tr class=''>
           <th>Name</th>
           <th>Date</th>
-          <th>Start</th>
-          <th>End</th>
+          
         </tr>
       </thead>
       <tbody id="personTableBody">
@@ -32,17 +49,17 @@
   
  <!-- Modal for editing person details -->
  <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog " role="document">
+  <div class="modal-dialog modal-fullscreen " role="document">
     <div class="modal-content">
       <div class="modal-header position-relative">
         <button type="button"  class="position-absolute btn btn-danger" id="deletePerson">Delete</button>
-        <h5 class="modal-title w-100 text-center ">Edit Person </h5>
+        <h5 class="modal-title w-100 text-center "> </h5>
         
         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true"></span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body ">
         
         <form id="editForm">
           
@@ -71,14 +88,21 @@
                   <label for="subjective">Subjective</label>
                 </div>
                 
-                <div class="btn-group w-100 pb-1" role="group" aria-label="Basic radio toggle button group">
-                  <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent1" aria-expanded="false" aria-controls="collapseContent1">Functional</button>
-                  <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent2" aria-expanded="false" aria-controls="collapseContent2">Soft Tissue</button>
-                  <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent3" aria-expanded="false" aria-controls="collapseContent3">Joint</button>
-                  <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent4" aria-expanded="false" aria-controls="collapseContent4">Dry Needle</button>
+                <div class=" btn-group btn-group-sm  pb-1" role="group" aria-label="Basic radio toggle button group" style='width: 100%;'>
+                    <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent1" aria-expanded="false" aria-controls="collapseContent0">Exercises</button>
+                    <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent2" aria-expanded="false" aria-controls="collapseContent1">Functional</button>
+                  <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent3" aria-expanded="false" aria-controls="collapseContent2">Soft Tissue</button>
+                  <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent4" aria-expanded="false" aria-controls="collapseContent3">Joint</button>
+                  <button class="btn btn-outline-primary collapse-button" type="button" data-toggle="collapse" data-target="#collapseContent5" aria-expanded="false" aria-controls="collapseContent4">Dry Needle</button>
                 </div>
-              
-                <div class="collapse collapse-content" id="collapseContent1">
+                <div class="container-fluid collapse collapse-content" id="collapseContent1">
+                    <div class="" id="container">
+                    </div>
+                    <div id='listExercises' class="    ">
+                        
+                    </div>
+                </div>
+                <div class="collapse collapse-content" id="collapseContent2">
                   <div class="d-flex flex-wrap gap-1" >
                     <input type="checkbox" class=" btn-check " id="btnCheck1" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnCheck1">ADL</label>
@@ -103,7 +127,7 @@
                   </div>
                 </div>
 
-                <div class="collapse collapse-content" id="collapseContent2">
+                <div class="collapse collapse-content" id="collapseContent3">
                   <div class="form-floating pb-3" >
                     <textarea class="form-control" id="softy" name="softy" placeholder="Soft Tissue"></textarea>
                     <label for="softy">Soft Tissue</label>
@@ -111,14 +135,14 @@
                 </div>
 
 
-                <div class="collapse collapse-content" id="collapseContent3">
+                <div class="collapse collapse-content" id="collapseContent4">
                   <div class="form-floating pb-3" >
                     <textarea class="form-control" id="mob" name="mob" placeholder="Joint Mobilization"></textarea>
                     <label for="mob">Joint Mobilization</label>
                   </div>
                 </div>
                 
-                <div class="collapse collapse-content" id="collapseContent4">
+                <div class="collapse collapse-content" id="collapseContent5">
                   <div class="form-floating pb-3" >
                     <textarea class="form-control" id="dn" name="dn" placeholder="Dry Needling"></textarea>
                     <label for="dn">Dry Needling</label>
@@ -157,13 +181,101 @@
     </div>
   </div>
 </div>
-    
+
+<!-- Modal for adding exercises -->
+<div class="modal" id="myModal" data-backdrop="false">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            
+            <div class="modal-body" id="modalBody">
+               
+                <!-- Content from the loaded HTML page will be displayed here -->
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="addExercises">Add Exercises</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exerciseEditModal" data-backdrop="false" tabindex="-1"  aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+        <div class="modal-header">
+            
+          <h5 class="modal-title" id="editModalLabel">Edit Exercise</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"></span>
+          </button>   
+          
+            
+                 </div>
+        <div class="modal-body position-relative">
+            
+            <input type="text" id="modalExerName" class="form-control mb-2" placeholder="Exercise Name">
+            <div id= "resistanceTypesGroup" class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" >
+                <label class="btn btn-outline-primary" for="btnradio1">Machine</label>
+              
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio2">TB</label>
+              
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio3">DB</label>
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio4">KB</label>
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio5">Bodyweight</label>
+              </div>
+
+              <input type="text" id="modalDurationName" class="form-control mb-2" placeholder="Duration">
+              <input type="text" id="modalSetName" class="form-control mb-2" placeholder="Sets">
+              <input type="text" id="modalRepName" class="form-control mb-2" placeholder="Reps">
+              <input type="text" id="modalBoutName" class="form-control mb-2" placeholder="Bouts">
+              <input type="text" id="modalSecondsName" class="form-control mb-2" placeholder="Seconds">
+              <input type="text" id="modalWeightName" class="form-control mb-2" placeholder="Weight">
+              <input type="text" id="modalColorName" class="form-control mb-2" placeholder="Color">
+        
+            
+                <button type="button" class="position-absolute bottom-0 start-0 ms-4 btn btn-secondary " id="prevExercise">Previous</button>
+            <button type="button" class="position-absolute bottom-0 end-0 me-4 btn btn-secondary " id="nextExercise">Next</button>
+            
+            
+        
+    </div>
+        <div class="modal-footer">
+            
+                
+            
+          <button type="button" class="btn btn-primary w-100" id="saveExChanges">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
    
-    <script>
+<script>
        $(document).ready(function () {
 
-
-
+ $('#myModal').on('shown.bs.modal', function () {
+    $('#modalBody').load('exercise.html');
+    checkedElementsArray=[];
+    });
+var addExercises = document.getElementById('addExercises');
+addExercises.addEventListener('click', () => {
+    const editForm = document.getElementById('editForm');
+  const index = editForm.getAttribute('data-person-index');
+    exercises.push(...checkedElementsArray)
+    populateExercises (checkedElementsArray);
+    personsArray[index].exercises = exercises;
+    localStorage.setItem('pt', JSON.stringify(personsArray));
+    $('#myModal').modal('hide');
+})
 
 
 var saveChangesButton = document.getElementById('saveChanges');
@@ -181,6 +293,7 @@ saveChangesButton.addEventListener('click', () => {
   personsArray[index].mob = editForm.mob.value;
   personsArray[index].assessment = editForm.assessment.value;
   personsArray[index].plan = editForm.plan.value;
+  personsArray[index].exercises = exercises;
   
   // Update other fields as needed
 
@@ -222,6 +335,30 @@ removePersonButton.addEventListener('click', () => {
 });
 var fetchBtn = document.getElementById("fetchBtn");
 fetchBtn.addEventListener("click", getit);
+
+$('#saveExChanges').click(function() {
+    autoSaveExercises();
+    $('#exerciseEditModal').modal('hide');
+  });
+  
+  // Navigate to previous exercise
+  $('#prevExercise').click(function() {
+    if (currentExerciseIndex > 0) {
+        autoSaveExercises();
+      currentExerciseIndex--;
+      populateModal(currentExerciseIndex);
+    }
+  });
+  
+  // Navigate to next exercise
+  $('#nextExercise').click(function() {
+    if (currentExerciseIndex < totalExercises - 1) {
+        autoSaveExercises();
+      currentExerciseIndex++;
+      populateModal(currentExerciseIndex);
+    }
+  });  
+
 
   });
 </script>

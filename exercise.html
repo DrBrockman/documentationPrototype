@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head></head>
+<head>
+    <meta charset="UTF-8">
+    
+</head>
 <style>
   		body {
             height: 100%;
@@ -12,27 +15,7 @@
   margin:0 5% 0 0;
   padding:0;
 }		
-.flowers-wrap {
-  float:left;
-  width:20%;
-  margin:0 5% 0 0;
-  padding:0;
-  position:relative;
-}	
-.flowers {
-  float:left;
-  width:50%;
-}
-.flowers div {
-  float:left;
-  width:90%;
-  height:68px;
-  line-height:68px;
-  padding:0 5%;
-  background:#eee;
-  margin:0 0 1px;
-  position:relative;
-}	
+
 #top.form{
 
 position: relative;
@@ -47,15 +30,7 @@ color: #9ca3af;
 
 }
 
-.form span{
 
-    position: absolute;
-right: 17px;
-top: 13px;
-padding: 2px;
-border-left: 1px solid #d1d5db;
-
-}
 
 .left-pan{
 padding-left: 7px;
@@ -80,12 +55,23 @@ padding-top: 2px;
 padding-bottom: 2px;
 padding-right: 2px;
 }
+.event-date span  {
+    color: #4125dd;
+    font-size: 22px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+}
+.event-date p {
+    color: #656565;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 5px;
+}
 
     </style>
 <body>
-    
-    
-    <div class="container card w-100  d-flex ">
+      <div class="container-fluid card   d-flex ">
         
         <!-- nav options -->
         <ul class="nav nav-pills mb-1  justify-content-center " id="pills-tab" role="tablist">
@@ -96,7 +82,7 @@ padding-right: 2px;
                     <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Resistance</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Values</a>
+                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Categories</a>
                 </li>
             </ul>
             <!-- content -->
@@ -136,12 +122,12 @@ padding-right: 2px;
                     
                     <div class="  exfilter pb-2 pt-2">
                         <div class="form-check d-inline">
-                            <input type="checkbox" name="type" value="bw" class="btn-check btn-sm" id="btn-check-5" autocomplete="off">
-                            <label class="btn btn-sm fw-bold" for="btn-check-5"  data-target="Bodyweight" >Bodyweight</label>
+                            <input type="checkbox" name="type" value="bw" class="btn-check btn-sm" id="btn-check-13" autocomplete="off">
+                            <label class="btn btn-sm fw-bold" for="btn-check-13"  data-target="Bodyweight" >Bodyweight</label>
                         </div>
                         <div class="form-check d-inline">    
-                            <input type="checkbox" name="type" value="tb" class="btn-check btn-sm" id="btn-check-6" autocomplete="off">
-                            <label class="btn btn-sm fw-bold" for="btn-check-6" data-target="Theraband">Theraband</label>
+                            <input type="checkbox" name="type" value="tb" class="btn-check btn-sm" id="btn-check-14" autocomplete="off">
+                            <label class="btn btn-sm fw-bold" for="btn-check-14" data-target="Theraband">Theraband</label>
                         </div>
                         <div class="form-check d-inline">    
                                 <input type="checkbox" name="type" value="machine" class="btn-check btn-sm" id="btn-check-7" autocomplete="off">
@@ -180,17 +166,21 @@ padding-right: 2px;
             </div>
             
             
-                <div class="container mt-4">
+                <div class="container-fluid mt-4">
                     
                     <table class="table">
-                      <thead>
-                        <tr>
-                          <th>Exercise<span class="badge bg-primary" >
-                          </span></th>
-                          <th></th> <th></th>
+                      <thead > 
+                        <tr >
+                          <td style=" position: relative" class="col-2" >Exercise
+                            </td>
+                          <td></td> 
+                        </tr>
+                        <tr><input type="text" id="searchInput" class="form-control mb-3" placeholder="Search...">
+                            <p class="badge bg-primary " id="badge" style="display: none" >
+                            </p>
                         </tr>
                       </thead>
-                      <tbody class="bod">
+                      <tbody class=" bod">
                         
                         
                         <!-- Add more rows as needed -->
@@ -198,6 +188,9 @@ padding-right: 2px;
                     </table>
                   </div>
 
+                                
+                                
+                          
             
 </body>
 <script>
@@ -252,52 +245,90 @@ var filterFunc = function() {
 
 $filterCheckboxes.on('change', filterFunc);  
 
-$(".exerciseList").on("click", function(event) {
-    if (!$(event.target).hasClass("fa")) { // Exclude clicks on the span element
-      var checkbox = $(this).find(".form-check-input");
-      checkbox.prop("checked", !checkbox.prop("checked"));
-      if (checkbox.prop("checked")) {
-          checkedCount++;
+
+// $('.bod').on('click', '.exerciseList', function (event) {
+//     if (!$(event.target).is(':checkbox')) {
+//         const checkbox = $(this).find('.form-check-input');
+//         const nameExercise = $(this).find('td#nameExercise').text(); // Get the text content
+
+//         checkbox.prop('checked', !checkbox.prop('checked'));
+
+//         if (checkbox.prop("checked")) {
+//             checkedCount++;
+//             checkedElementsArray.push(nameExercise); // Add to the array when checked
+//         } else {
+//             checkedCount--;
+//             // Remove the element from the array when unchecked
+//             const index = checkedElementsArray.indexOf(nameExercise);
+//             if (index !== -1) {
+//                 checkedElementsArray.splice(index, 1);
+//             }
+//         }
+
+//         updateBadge();
+//     }
+
+//     console.log(checkedElementsArray); // This will log the updated array of checked elements with 'nameExercise' id
+// });
+   $('.bod').on('click', '.exerciseList', function (event) {
+    if (!$(event.target).is(':checkbox')) {
+        const checkbox = $(this).find('.form-check-input');
+        const nameExercise = $(this).find('td#nameExercise').text(); // Get the text content
+        const tdNameExercise = $(this).closest('tr.exerciseList');
+
+        checkbox.prop('checked', !checkbox.prop('checked'));
+
+        if (checkbox.prop("checked")) {
+            checkedCount++;
+
+            // Get the dataset.difficulty attribute from the td
+            const difficulty = tdNameExercise.data('difficulty');
+
+            // Create a new Exercise object with the difficulty
+            const newExercise = new Exercise(nameExercise, difficulty, '', '', '', '', '', '', '');
+            checkedElementsArray.push(newExercise); // Add the new Exercise object to the array when checked
         } else {
-          checkedCount--;
+            checkedCount--;
+            // Remove the Exercise object from the array when unchecked
+            const index = checkedElementsArray.findIndex(exercise => exercise.name === nameExercise);
+            if (index !== -1) {
+                checkedElementsArray.splice(index, 1);
+            }
         }
+
         updateBadge();
     }
-  });
-  
-  
+    console.log(checkedElementsArray); // This will log the updated array of checked elements with 'nameExercise' id
+});
 
-// async function getDataAndPopulateTable() {
-//   const url = 'https://script.google.com/macros/s/AKfycbxqBB1SPDUV3Cd-3_NuHvSUxIckB4wFvu0lQwFa0msXEdS5039BQ_yqI1HzKHCdne-hgA/exec';
 
-//   try {
-//     const response = await fetch(url);
-//     const data = await response.json();
 
+
+
+
+function updateBadge() {
     
-//   } catch (error) {
-//     console.error('Error fetching data:', error);
-//   }
-// }
-
-// getDataAndPopulateTable();
-
-//var theurl = 'https://script.google.com/macros/s/AKfycbxqBB1SPDUV3Cd-3_NuHvSUxIckB4wFvu0lQwFa0msXEdS5039BQ_yqI1HzKHCdne-hgA/exec';
-
-// const eventSource = new EventSource(theurl);
-// eventSource.onmessage = (event) => {
-//   const data = JSON.parse(event.data);
-//   console.log('Received updated data:', data);
-// };
-
-// eventSource.onerror = (error) => {
-//   console.error('SSE Error:', error);
-// };
+    const badge = document.getElementById('badge');
+    if (checkedCount > 0) {
+        badge.textContent = checkedCount;
+        badge.style.display = 'inline-block';
+        badge.style.position = 'absolute';
+        badge.style.zIndex = '100';
+        badge.style.right = '15%';
+       
+       
+        
+    } else {
+        badge.style.display = 'none';
+    }
+}
 poptable ();
 
 });
 
-
+function openUp () {
+    $('#theModal').modal('show');
+}
 
 
 

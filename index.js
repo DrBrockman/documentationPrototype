@@ -5,7 +5,19 @@ if (!localStorage.getItem('pt'))
     
 }
 var personsArray = JSON.parse(localStorage.getItem('pt'))
-
+class Exercise {
+    constructor(name, type, duration, weight, color, sets, reps, bouts, seconds) {
+      this.name = name;
+      this.type = type;
+      this.duration = duration;
+      this.weight = weight;
+      this.color = color;
+      this.sets = sets;
+      this.reps = reps;
+      this.bouts = bouts;
+      this.seconds = seconds;
+    }
+  }
 const firebaseConfig = {
     apiKey: "AIzaSyBk2Uc6NfC9itI5eUMN7xdMyFkkdVb5VxU",
     authDomain: "documentation-assistant.firebaseapp.com",
@@ -18,6 +30,12 @@ const firebaseConfig = {
   };
 var data;
 var newArray;
+var clickedExercise;
+let checkedCount = 0;
+var checkedElementsArray = [];
+var exercises = [];
+let currentExerciseIndex = 0;
+let totalExercises = $('.mobileExerciseLayout').length;
 //var personsArray = [];
    // Initialize Firebase
    firebase.initializeApp(firebaseConfig); 
@@ -31,7 +49,7 @@ async function getDataAndPopulateTable() {
     try {
       const response = await fetch(url);
        data = await response.json();
-  
+       poptable();
       
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -57,8 +75,7 @@ async function getDataAndPopulateTable() {
       row.innerHTML = `
         <td>${person.name}</td>
         <td>${person.date}</td>
-        <td>${person.start}</td>
-        <td>${person.end}</td>
+        
       `;
   
       // Attach a click event listener to each row
@@ -70,32 +87,26 @@ async function getDataAndPopulateTable() {
   
   function poptable() {
     // Get the tbody element by its class name
-    const tbody = document.querySelector('.bod');
-    const badge = document.querySelector('.badge.bg-primary');
-    let checkedCount = 0; // Counter to keep track of checked checkboxes
+    var tbody = document.querySelector('.bod');
+    
   
     // Clear existing rows from tbody
     tbody.innerHTML = '';
   
     // Loop through the data and create rows
     data.exercises.forEach(item => {
-      const tr = document.createElement('tr');
+      var tr = document.createElement('tr');
       tr.classList.add('exerciseList');
       tr.dataset.category = item.category; // Replace with the appropriate property name
-  
+      tr.dataset.difficulty = item.difficulty; // Replace with the appropriate property name  
       tr.innerHTML = `
         <td>
           <div class="form-check">
-            <input type="checkbox" class="form-check-input">
+            <input type="checkbox" class="form-check-input exerciseListBox">
           </div>
         </td>
-        <td>${item.name}</td>
-        <td class="text-right">
-          <span>
-            <em class="fa fa-edit mr-2"></em>
-            <em class="fa fa-trash"></em>
-          </span>
-        </td>
+        <td id= "nameExercise" >${item.name}</td>
+        
       `;
   
       // Append the created row to the tbody
@@ -104,12 +115,9 @@ async function getDataAndPopulateTable() {
       
     });
   
-    function updateBadge() {
-      badge.textContent = checkedCount > 0 ? '+' + checkedCount : '';
-    }
     
   }
-  
+ 
   // Call the function to initialize the table and badge
   
   
@@ -136,7 +144,9 @@ function updatePersonInLocalStorage(updatedPerson) {
   
   function openEditModal(index) {
     const person = personsArray[index];
+     exercises = [];
     
+
     if (!person) {
         console.error("No person found for the given index:", index);
         return;
@@ -148,7 +158,10 @@ function updatePersonInLocalStorage(updatedPerson) {
         console.error("Edit form not found!");
         return;
     }
-
+    var listExercises = document.getElementById('listExercises');
+    while (listExercises.firstChild) {
+    listExercises.removeChild(listExercises.firstChild);
+    }
     // Check for each input before setting its value
     if (editForm.name) editForm.name.value = person.name || "";
     if (editForm.start) editForm.start.value = person.start || "";
@@ -159,7 +172,26 @@ function updatePersonInLocalStorage(updatedPerson) {
     if (editForm.mobbin) editForm.mobbin.value = person.mobbin || "";
     if (editForm.assessment) editForm.assessment.value = person.assessment || "";
     if (editForm.plan) editForm.plan.value = person.plan || "";
-
+    exercises = person.exercises || [];
+    console.log(person.exercises)
+    console.log(  "after retrieving from local storage")
+    // Check if the container has no child elements
+    if (document.getElementById('container').childElementCount === 0) {
+    // Create the "Add Exercises" button
+    var addButton = document.createElement('button');
+    addButton.textContent = 'Add Exercises';
+    addButton.type = 'button';
+    addButton.classList.add('btn', 'btn-primary', 'btn-sm', 'mt-3');
+    addButton.setAttribute('data-toggle', 'modal');
+    addButton.setAttribute('data-target', '#myModal');
+    // Add an event listener to the button
+    // Append the button to the container
+    document.getElementById('container').appendChild(addButton);
+    }
+    if (exercises.length > 0) {
+        populateExistingExercises(exercises);
+         
+    }
     // Show the modal
     $('#editModal').modal('show');
 
@@ -238,27 +270,298 @@ function updateActiveIcon(clickedIcon) {
     $('.icon, .icon-center').removeClass('active-indicator'); // Remove active class from all icons
     $(clickedIcon).addClass('active-indicator'); // Add active class to the clicked icon
 }
-const checkboxes = document.querySelectorAll('input[name="options"]');
-        const badge = document.getElementById('badge');
 
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', updateBadge);
-        });
-
-        function updateBadge() {
-            const checkedCheckboxes = document.querySelectorAll('input[name="options"]:checked');
-            if (checkedCheckboxes.length > 0) {
-                badge.textContent = checkedCheckboxes.length;
-                badge.style.display = 'inline';
-            } else {
-                badge.style.display = 'none';
-            }
-           
-            
-             
-
-
-        }
-
+ function populateExercises (exercises) {
+    for (const exercise of exercises) {
+        // Create a container div for each exercise
+        const exerciseDiv = document.createElement('div');
+        exerciseDiv.classList.add('mobileExerciseLayout', 'd-flex', 'flex-row', 'mt-1', 'mb-2', 'align-items-center');
+      
+        if (exercise.type === 'warmup') {
+          // Create the warm-up HTML structure
+          exerciseDiv.id = 'warmup';
+          exerciseDiv.innerHTML = `
+            <div class="flex-grow-1 col-8">
+                <div class="d-flex flex-column flex-nowrap ps-1">
+                    <div class='h6 m-0' id='exerName'>${exercise.name}</div>
+                    <span id="typePill" class="align-self-start badge bg-pill bg-primary ">Warm Up</span>
+                </div>
+            </div>
+            <div class="col-4 d-flex align-items-center">
+                <span id= 'durationName' class="text-primary h3 m-0 pe-2">5</span>
+                <span style="color: #656565;" class="h5 m-0 ">MINUTES</span>
+            </div>
+          `;
+        } else if (exercise.type === 'resistance') {
+          // Create the resistance HTML structure
+          exerciseDiv.id = 'resistance';
+          exerciseDiv.innerHTML = `
+            <div class="flex-grow-1">
+                <div class="d-flex flex-column flex-nowrap ps-1">
+                    <div class='h6 m-0' id='exerName'>${exercise.name}</div>
+                    <span id="typePill" class="align-self-start badge bg-pill bg-primary ">Machine</span>
+                </div>
+            </div>
+      
+            <div class="col-3 d-inline-flex align-items-center">
+                <div>
+                    <div class="ex-data">
+                        <span id="intenseName" class="afta text-primary h1 m-0 float-start"> - </span>
+                    </div>
+                </div>
+            </div>
+      
+            <div class="d-inline-flex align-items-center">
+                <div class="float-end pe-2">
+                    <div class="ex-data">
+                        <span id='setName' class="text-primary h5 m-0 float-end">3</span>
+                        <p style="color: #656565;" class="m-0">SETS</p>
+                    </div>
+                </div>
         
+                <div class="float-end pe-2">
+                    <div class="ex-data">
+                        <span id='repName' class="text-primary h5 m-0 float-end">8</span>
+                        <p style="color: #656565;" class="m-0">REPS</p>
+                    </div>
+                </div>
+            </div>
+          `;
+        } else if (exercise.type === 'stretch') {
+          // Create the stretch HTML structure
+          exerciseDiv.id = 'stretch';
+          exerciseDiv.innerHTML = `
+            <div class="flex-grow-1 col-8">
+                <div class="d-flex flex-column flex-nowrap ps-1">
+                    <div id='exerName' class='h6 m-0'>${exercise.name}</div>
+                    <span id="typePill" class="align-self-start badge bg-pill bg-primary ">Stretch</span>
+                </div>
+            </div>
+            <div class="d-inline-flex align-items-center">
+        <div  class="float-end  pe-2 ">
+        <div class="ex-data ">
+            <span id='boutName' class="text-primary h5 m-0 float-end">3</span>
+            <p style="color: #656565;" class="m-0">BOUTS</p>
+        </div>
     
+        </div>
+
+    <div  class="float-end pe-2">
+        <div class="ex-data ">
+            <span id='secondsName' class="text-primary h5 m-0 float-end">25</span>
+            <p style="color: #656565;" class="m-0">SECS</p>
+        </div>
+    
+    </div>
+          `;
+        }
+      
+        // Append the created exerciseDiv to the appropriate div based on type
+        const listDiv = document.getElementById('listExercises');
+        listDiv.appendChild(exerciseDiv);
+      }
+      
+      $('.mobileExerciseLayout').click(function() {
+        totalExercises = $('.mobileExerciseLayout').length;
+        currentExerciseIndex = $(this).index('.mobileExerciseLayout');
+        populateModal(currentExerciseIndex);
+        $('#exerciseEditModal').modal('show');
+      }); 
+      
+ }  
+ function populateExistingExercises (exercises) {
+    for (const exercise of exercises) {
+        // Create a container div for each exercise
+        const exerciseDiv = document.createElement('div');
+        exerciseDiv.classList.add('mobileExerciseLayout', 'd-flex', 'flex-row', 'mt-1', 'mb-2', 'align-items-center');
+      
+        if (exercise.type === 'warmup') {
+          // Create the warm-up HTML structure
+          exerciseDiv.id = 'warmup';
+          exerciseDiv.innerHTML = `
+            <div class="flex-grow-1 col-8">
+                <div class="d-flex flex-column flex-nowrap ps-1">
+                    <div class='h6 m-0' id='exerName'>${exercise.name}</div>
+                    <span id="typePill" class="align-self-start badge bg-pill bg-primary ">Warm Up</span>
+                </div>
+            </div>
+            <div class="col-4 d-flex align-items-center">
+                <span id= 'durationName' class="text-primary h3 m-0 pe-2">${exercise.duration}</span>
+                <span style="color: #656565;" class="h5 m-0 ">MINUTES</span>
+            </div>
+          `;
+        } else if (exercise.type === 'resistance') {
+          // Create the resistance HTML structure
+          exerciseDiv.id = 'resistance';
+          exerciseDiv.innerHTML = `
+            <div class="flex-grow-1">
+                <div class="d-flex flex-column flex-nowrap ps-1">
+                    <div class='h6 m-0' id='exerName'>${exercise.name}</div>
+                    <span id="typePill" class="align-self-start badge bg-pill bg-primary ">${exercise.type}</span>
+                </div>
+            </div>
+      
+            <div class="col-3 d-inline-flex align-items-center">
+                <div>
+                    <div class="ex-data">
+                        <span id="intenseName" class="afta text-primary h1 m-0 float-start">${exercise.weight}</span>
+                    </div>
+                </div>
+            </div>
+      
+            <div class="d-inline-flex align-items-center">
+                <div class="float-end pe-2">
+                    <div class="ex-data">
+                        <span id='setName' class="text-primary h5 m-0 float-end">${exercise.sets}</span>
+                        <p style="color: #656565;" class="m-0">SETS</p>
+                    </div>
+                </div>
+        
+                <div class="float-end pe-2">
+                    <div class="ex-data">
+                        <span id='repName' class="text-primary h5 m-0 float-end">${exercise.reps}</span>
+                        <p style="color: #656565;" class="m-0">REPS</p>
+                    </div>
+                </div>
+            </div>
+          `;
+        } else if (exercise.type === 'stretch') {
+          // Create the stretch HTML structure
+          exerciseDiv.id = 'stretch';
+          exerciseDiv.innerHTML = `
+            <div class="flex-grow-1 col-8">
+                <div class="d-flex flex-column flex-nowrap ps-1">
+                    <div id='exerName' class='h6 m-0'>${exercise.name}</div>
+                    <span id="typePill" class="align-self-start badge bg-pill bg-primary ">${exercise.type}</span>
+                </div>
+            </div>
+            <div class="d-inline-flex align-items-center">
+        <div  class="float-end  pe-2 ">
+        <div class="ex-data ">
+            <span id='boutName' class="text-primary h5 m-0 float-end">${exercise.bouts}</span>
+            <p style="color: #656565;" class="m-0">BOUTS</p>
+        </div>
+    
+        </div>
+
+    <div  class="float-end pe-2">
+        <div class="ex-data ">
+            <span id='secondsName' class="text-primary h5 m-0 float-end">${exercise.seconds}</span>
+            <p style="color: #656565;" class="m-0">SECS</p>
+        </div>
+    
+    </div>
+          `;
+        }
+      
+        // Append the created exerciseDiv to the appropriate div based on type
+        const listDiv = document.getElementById('listExercises');
+        listDiv.appendChild(exerciseDiv);
+      }
+      
+      $('.mobileExerciseLayout').click(function() {
+        totalExercises = $('.mobileExerciseLayout').length;
+        currentExerciseIndex = $(this).index('.mobileExerciseLayout');
+        populateModal(currentExerciseIndex);
+        $('#exerciseEditModal').modal('show');
+      }); 
+      
+ }  
+ function populateModal(index) {
+        
+    clickedExercise = $('.mobileExerciseLayout').eq(index);
+    const exerName = clickedExercise.find('#exerName').text();
+    const setName = clickedExercise.find('#setName').text();
+    const repName = clickedExercise.find('#repName').text();
+    const typePill = clickedExercise.find('#typePill').text();
+    const durationName = clickedExercise.find('#durationName').text();
+    const weightName = clickedExercise.find('#intenseName').text();
+    const colorName = clickedExercise.find('#colorName').text();
+    const boutsName = clickedExercise.find('#boutName').text();
+    const secondsName = clickedExercise.find('#secondsName').text();
+
+    
+    $('#modalExerName').val(exerName);
+    $('#modalSetName').val(setName);
+    $('#modalRepName').val(repName);
+    $('#modalDurationName').val(durationName);
+    $('#modalWeightName').val(weightName);
+    $('#modalColorName').val(colorName);
+    $('#modalBoutName').val(boutsName);
+    $('#modalSecondsName').val(secondsName);
+  
+    // Show or hide resistanceTypesGroup based on typePill
+    // if (typePill === "Stretch" || typePill === "Warm Up") {
+    //   $('#resistanceTypesGroup').hide();
+    //   if (typePill === "Stretch") {
+    //     $('#modalWeightName').hide();
+    //     $('#modalRepName').hide();
+    //     $('#modalSetName').hide();
+    //     $('#modalDurationName').hide();
+    //     $('#modalColorName').hide();
+    //   }
+    //   if (typePill === "Warm Up") {
+    //     $('#modalWeightName').hide();
+    //     $('#modalRepName').hide();
+    //     $('#modalSetName').hide();
+    //     $('#modalDurationName').show();
+    //     $('#modalSecondsName').hide();
+    //     $('#modalColorName').hide();
+    //   }
+    // } else {
+    //   $('#resistanceTypesGroup').show();
+    //   $('#modalDurationName').hide();
+    //     $('#modalColorName').hide();
+    //     $('#modalSecondsName').hide();
+    //     $('#modalBoutName').hide();
+    // }
+    
+    // Set the radio button based on typePill
+    $(`input[type=radio][name=btnradio]`).each(function() {
+      if ($(this).next('label').text() === typePill) {
+        $(this).prop('checked', true);
+      }
+    });
+  }   
+
+ 
+  
+         
+ function autoSaveExercises () { 
+    const editForm = document.getElementById('editForm');
+ const index = editForm.getAttribute('data-person-index');
+       const newExerName = $('#modalExerName').val();
+       const newSetName = $('#modalSetName').val();
+       const newRepName = $('#modalRepName').val();
+       const newDurationName = $('#modalDurationName').val();
+       const newWeightName = $('#modalWeightName').val();
+        const newColorName = $('#modalColorName').val();
+        const newBoutsName = $('#modalBoutName').val();
+        const newSecondsName = $('#modalSecondsName').val();
+       
+       // Get the selected radio button label
+       const selectedType = $(`input[type=radio][name=btnradio]:checked`).next('label').text();
+       
+       clickedExercise.find('#exerName').text(newExerName);
+       clickedExercise.find('#setName').text(newSetName);
+       clickedExercise.find('#repName').text(newRepName);
+       clickedExercise.find('#typePill').text(selectedType); // Assuming typePill is the text inside the badge
+         clickedExercise.find('#durationName').text(newDurationName);
+            clickedExercise.find('#intenseName').text(newWeightName);
+            clickedExercise.find('#colorName').text(newColorName);
+            clickedExercise.find('#boutName').text(newBoutsName);
+            clickedExercise.find('#secondsName').text(newSecondsName);
+
+       const savedexercise = personsArray[index].exercises.find(exercise => exercise.name === clickedExercise.find('#exerName').text());
+       if (savedexercise) {
+        // savedexercise.type = selectedType || null;
+         savedexercise.sets = newSetName || '';
+         savedexercise.reps = newRepName || '';
+         savedexercise.duration = newDurationName || '';
+         savedexercise.weight = newWeightName || '';
+         savedexercise.color = newColorName || '';
+         savedexercise.bouts = newBoutsName || '';
+         savedexercise.seconds = newSecondsName || '';
+       }
+       localStorage.setItem('pt', JSON.stringify(personsArray));
+    }   

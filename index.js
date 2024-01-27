@@ -44,7 +44,7 @@ let totalExercises = $('.mobileExerciseLayout').length;
 
 
 async function getDataAndPopulateTable() {
-    const url = 'https://script.google.com/macros/s/AKfycbyduPifAtND8lwhJXW1RC_HZnOBJggZJ6qc4nfVldzVqylq-9mZgjxLGBujcktwrjgcLg/exec';
+    const url = 'https://script.google.com/macros/s/AKfycbxaj9HjCA16hkxqjt5Fc1Z146mS_gLE6EKLPBIhDLIEBU1sliXRBjh-GfpLQpPVoASS2A/exec';
   
     try {
       const response = await fetch(url);

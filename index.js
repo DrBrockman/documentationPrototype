@@ -565,3 +565,34 @@ function updateActiveIcon(clickedIcon) {
        }
        localStorage.setItem('pt', JSON.stringify(personsArray));
     }   
+
+const Redocoptions = {
+  method: 'POST',
+  headers: {
+    Accept: 'application/json, text/plain, */*',
+    'Accept-Language': 'en-US,en;q=0.9,my;q=0.8',
+    Connection: 'keep-alive',
+    'Content-Type': 'application/json',
+    Cookie: 'OneUiMode=true; __RequestVerificationToken=6WE9kXrh2oi7DYptRlJ2goyOmIsDeUlnWwJMafIp53DOCWuMJmbAAyOAvPBNgyf3vX4Q6-Y_4Ar-BWkrB3ZiBesHXR81; ASP.NET_SessionId=njzab1rm0efkwjhhhdb550ml; WoundExpertAuth=B8F0614EDE4DD638453943D21CB88D918DE47101E39BEBEA1B04D5C8A6557565FF668ADC905B7CFF9764F4B379E021F95605C054C7F370F2AF608F4FCF0A39E6F8FDE5120FAC6930DA4CBE96E3BD3B862DC734F47884BE916CBE842851D03D97B3C62CD88C42054DC08226529C18F5ADA9A21C77',
+    Origin: 'https://www.redoc.com',
+    Referer: 'https://www.redoc.com/',
+    'Sec-Fetch-Dest': 'empty',
+    'Sec-Fetch-Mode': 'cors',
+    'Sec-Fetch-Site': 'same-origin',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    
+    
+  },
+  body: '{"startDate":"2024-03-06T00:00:00.000-06:00","endDate":"2024-03-06T00:00:00.000-06:00","componentOfCareIds":"JlTuYWpEVXg%3d","visitTypeIds":"","showCancelledVisits":true,"clinicianIds":"UCACDzAa4nE'
+};
+
+fetch('https://www.redoc.com/api/Visit/Query?api-version=2.0', Redocoptions)
+  .then(response => response.json())
+  .then(response => {
+    console.log(response.visits);
+    let filteredVisits = response.visits.filter(visit => 
+      visit.clinician && visit.clinician.firstName === 'Derek'
+    );
+    console.log(filteredVisits);
+  })
+  .catch(err => console.error(err));

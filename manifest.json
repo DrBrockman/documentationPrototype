@@ -1,7 +1,7 @@
 {
     "name": "Documentation Helper",
     "short_name": "Comprimise",
-    "start_url": "./",
+    "start_url": "/go.html",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#007bff",

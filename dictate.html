@@ -25,14 +25,14 @@
 .indicator {
     display: none;  /* Initially hidden */
     padding: 10px;
-    background-color: #f9f9f9;
+    background-color: rgb(241, 245, 245);
     border: 1px solid #ccc;
     border-radius: 5px;
     text-align: center;
     margin-top: 10px;
 }
 #messagef {
-  background-color: azure;
+  background-color: rgb(241, 245, 245);
   border-radius: 10px;
   height: 60vh;
 }
@@ -43,30 +43,9 @@
     </head>
     <body>
         
-        <div class="container mt-5" style="display: none;">
-            <h2>Patient</h2>
-            <form id="bigyeet" class="yeet">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="name" name="name">
-                    <label class="placeholder" for="name">Name</label>
-                </div>
-                <div class="form-group">
-                    <textarea class="form-control" id="age" name="age" rows="4"></textarea>
-                    <label class="placeholder" for="age">age</label>
-                </div>
-                <div class="form-group">
-                    <textarea class="form-control" id="bodypart" name="bodypart" rows="4"></textarea>
-                    <label class="placeholder" for="bodypart">bodypart</label>
-                </div>
-                
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-            <div id="notes-container"></div>
-        </div>
-    </div>
-    
-    <div class="container-fluid d-flex flex-column align-items-center"> 
-      <div contenteditable="true" id="final"> </div>
+     
+    <div class="container-fluid mt-2 d-flex flex-column align-items-center"> 
+      
       <input class="border-0 w-100"  id="messagef" type="text" name="message" placeholder="..."></input>
       <button class="btn btn-primary w-25 m-3" id="buttonhug">Send</button>
     
@@ -92,14 +71,14 @@ ws.addEventListener('open', function (event) {
 });
 
 // listen for messages from the server
-ws.addEventListener('message', (event) => {
+// ws.addEventListener('message', (event) => {
   
  
-  var add = document.createElement('li')
-  add.innerText=`Received message: ${event.data}`
-  var list = document.getElementById('messages')
-  list.appendChild(add)
-});}
+//   var add = document.createElement('li')
+//   add.innerText=`Received message: ${event.data}`
+//   var list = document.getElementById('messages')
+//   list.appendChild(add)
+// });}
 connectWebSocket();
 function makeSimplePostRequest(url, data) {
   return fetch(url, {
@@ -131,6 +110,19 @@ document.getElementById('buttonhug').addEventListener("click", function(event) {
 data = {type : 'textToPaste', content : datasend}
 ws.send((JSON.stringify(data)))
   datasend = document.querySelector("#messagef").value=''
+});
+
+    document.getElementById('messagef').addEventListener("keypress", function(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault(); 
+        //ws.send((JSON.stringify({type : 'action', context : 'click'})))
+        datasend = document.getElementById('messagef').value
+        data = {type : 'textToPaste', content : datasend}
+        ws.send((JSON.stringify(data)))
+        datasend = document.querySelector("#messagef").value=''
+        //refocus on the input
+        document.getElementById('messagef').focus()
+    }
 });
 
 

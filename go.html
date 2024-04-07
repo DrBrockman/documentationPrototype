@@ -1,138 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>New note</title>
-        <style>
-   body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Your Single Page App</title>
+    
+   
+    <!-- Include Font Awesome for icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="manifest" href="/manifest.json">
+   
+    <style>
+        /* Additional custom styles */
+        body {
+            padding-bottom: 150px; /* Add space for the bottom navbar */
+            -webkit-tap-highlight-color: transparent;
         }
-
-        .vamoAlSubibaja {
-            border: 1px solid black;
-            padding: 10px;
+        .bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            padding: 10px 0;
+            
         }
-        #canvasOutput {
-    border: 1px solid black;
-    display: block;
-    margin-top: 10px;
-}
-.indicator {
-    display: none;  /* Initially hidden */
-    padding: 10px;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: center;
-    margin-top: 10px;
-}
-#messagef {
-  background-color: azure;
-  border-radius: 10px;
-  height: 60vh;
-}
+        .bottom-navbar .icon-container {
+            text-align: center;
+        }
+        .bottom-navbar .icon {
+            font-size: 24px;
+            margin: 0 20px;
+            color: #888;
+        }
+        .bottom-navbar .icon.active-indicator , .bottom-navbar .icon-center.active-indicator{
+            
+            color: #007bff;
+        }
+        .bottom-navbar .icon-center {
+            font-size: 30px;
+            margin: 0 20px;
+            color: #888;
+        }
+        .bottom-navbar .label {
+            font-size: 14px;
+            margin-top: 5px;
+            color: #888;
+        }
+        .active-indicator {
+            position: relative;
+            display: inline-block;
+        }
+        .active-indicator:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: #007bff; /* Active indicator color */
+            top: -8px;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Content Container -->
+    <div id="content" class="container mt-3">
+        <!-- Content will be dynamically loaded here -->
+    </div>
 
-        </style>
-
-
-    </head>
-    <body>
-        
-        <div class="container mt-5" style="display: none;">
-            <h2>Patient</h2>
-            <form id="bigyeet" class="yeet">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="name" name="name">
-                    <label class="placeholder" for="name">Name</label>
-                </div>
-                <div class="form-group">
-                    <textarea class="form-control" id="age" name="age" rows="4"></textarea>
-                    <label class="placeholder" for="age">age</label>
-                </div>
-                <div class="form-group">
-                    <textarea class="form-control" id="bodypart" name="bodypart" rows="4"></textarea>
-                    <label class="placeholder" for="bodypart">bodypart</label>
-                </div>
-                
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-            <div id="notes-container"></div>
+    <!-- Bottom Navigation Bar -->
+    <div class="bottom-navbar">
+        <div class="d-flex justify-content-center">
+            <div class="icon-container">
+                <a href="#" data-page="home" class="icon "><i class="bi bi-house"></i></a>
+                <div class="label">Home</div>
+            </div>
+            <div class="icon-container">
+                <a href="#" data-page="exercise"class="icon"><i class="bi bi-activity"></i></a>
+                <div class="label">Exercise</div>
+            </div>
+            <div class="icon-container">
+                <a href="#" data-page="dictate"class="icon-center active-indicator"><i class="bi bi-mic"></i></a>
+                <div class="label">Dictate</div>
+            </div>
+            <div class="icon-container">
+                <a href="#" data-page="patients"class="icon"><i class="bi bi-people"></i></a>
+                <div class="label">Patients</div>
+            </div>
+            <div class="icon-container">
+                <a href="#" data-page="settings"class="icon"><i class="bi bi-wrench"></i></a>
+                <div class="label">Settings</div>
+            </div>
         </div>
     </div>
-    
-    <div class="container-fluid d-flex flex-column align-items-center"> 
-      <div contenteditable="true" id="final"> </div>
-      <input class="border-0 w-100"  id="messagef" type="text" name="message" placeholder="..."></input>
-      <button class="btn btn-primary w-25 m-3" id="buttonhug">Send</button>
-    
+    <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+        // Registration was successful
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }, function(err) {
+        // registration failed :(
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    });
+  }
+</script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Include Bootstrap JS and Popper.js (required for some components) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore-compat.js"></script>
+  <script src="index.js"></script>
+
       
-    
-      
-     
-    </div>
-  
-
-    <script >
-
-function connectWebSocket() {
-const serverUrl = 'wss://socketsender.onrender.com';
-const clientName = 'AppleWatch';
-ws = new WebSocket(serverUrl);
-   
-ws.addEventListener('open', function (event) {
-        ws.send((JSON.stringify({ type: 'name', data: clientName })))
-        console.log('Connection established');
-
-
-});
-
-// listen for messages from the server
-ws.addEventListener('message', (event) => {
-  
- 
-  var add = document.createElement('li')
-  add.innerText=`Received message: ${event.data}`
-  var list = document.getElementById('messages')
-  list.appendChild(add)
-});}
-connectWebSocket();
-function makeSimplePostRequest(url, data) {
-  return fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json', // Adjust the content type if sending a different data format
-    },
-    body: JSON.stringify(data),
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .catch(error => {
-    throw new Error(`POST request failed: ${error.message}`);
-  });
-}
-
-const url = 'https://socketsender.onrender.com';
-// send a message to the server
-
-    
-document.getElementById('buttonhug').addEventListener("click", function(event) {
-    event.preventDefault(); 
-    //ws.send((JSON.stringify({type : 'action', context : 'click'})))
-    datasend = document.getElementById('messagef').value
-data = {type : 'textToPaste', content : datasend}
-ws.send((JSON.stringify(data)))
-  datasend = document.querySelector("#messagef").value=''
-});
-
-
-    </script>
+</body>
 </html>

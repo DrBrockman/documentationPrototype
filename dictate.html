@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <title>New note</title>
         <style>
    body {
@@ -112,14 +112,14 @@ ws.send((JSON.stringify(data)))
   datasend = document.querySelector("#messagef").value=''
 });
 
-    document.getElementById('messagef').addEventListener("keypress", function(event) {
+document.getElementById('messagef').addEventListener("keypress", function(event) {
     if (event.keyCode === 13) {
         event.preventDefault(); 
         //ws.send((JSON.stringify({type : 'action', context : 'click'})))
         datasend = document.getElementById('messagef').value
         data = {type : 'textToPaste', content : datasend}
         ws.send((JSON.stringify(data)))
-        datasend = document.querySelector("#messagef").value=''
+        document.querySelector("#messagef").value=''
         //refocus on the input
         document.getElementById('messagef').focus()
     }

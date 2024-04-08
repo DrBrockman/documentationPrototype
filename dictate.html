@@ -71,14 +71,9 @@ ws.addEventListener('open', function (event) {
 });
 
 // listen for messages from the server
-// ws.addEventListener('message', (event) => {
-  
- 
-//   var add = document.createElement('li')
-//   add.innerText=`Received message: ${event.data}`
-//   var list = document.getElementById('messages')
-//   list.appendChild(add)
-// });}
+ws.addEventListener('message', (event) => {
+  console.log('got milk')
+});}
 connectWebSocket();
 function makeSimplePostRequest(url, data) {
   return fetch(url, {
@@ -127,5 +122,5 @@ document.getElementById('messagef').addEventListener("keypress", function(event)
 
 
     </script>
-    </body>
+    
 </html>

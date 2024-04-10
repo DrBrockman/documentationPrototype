@@ -44,15 +44,14 @@
     <body>
         
      
-    <div class="container-fluid mt-2 d-flex flex-column align-items-center"> 
-      
-      <input class="border-0 w-100"  id="messagef" type="text" name="message" placeholder="..."></input>
+   <div class="container-fluid  d-flex flex-column align-items-center"> 
+      <div contenteditable="true" id="final"> </div>
+      <textarea class="border-0 w-100"  id="messagef" type="text" name="message" ></textarea>
       <button class="btn btn-primary w-25 m-3" id="buttonhug">Send</button>
     
       
     
-      
-     
+   
     </div>
   
 
@@ -66,10 +65,13 @@ ws = new WebSocket(serverUrl);
    
 ws.addEventListener('open', function (event) {
         ws.send((JSON.stringify({ type: 'name', data: clientName })))
-        console.log('Connection established');
-
+        
+document.getElementById('final').textContent = 'Connection established';
 
 });
+ws.addEventListener('close', function (event) {
+        document.getElementById('final').textContent = 'Connection closed';
+      });
 
 // listen for messages from the server
 ws.addEventListener('message', (event) => {

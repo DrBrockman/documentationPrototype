@@ -57,7 +57,8 @@
   
 
     <script >
-
+let ws;
+        
 function connectWebSocket() {
 const serverUrl = 'wss://socketsender.onrender.com';
 const clientName = 'AppleWatch';
@@ -119,7 +120,18 @@ document.getElementById('messagef').addEventListener("keypress", function(event)
         document.getElementById('messagef').focus()
     }
 });
+function reconnectWebSocket() {
+    if (document.visibilityState === 'visible') {
+        if (!ws || ws.readyState === WebSocket.CLOSED) {
+            connectWebSocket();
+        }
+    }
+}
 
+// Page Visibility API to check page focus and reconnect WebSocket
+document.addEventListener('visibilitychange', () => {
+    reconnectWebSocket();
+});
 
     </script>
     

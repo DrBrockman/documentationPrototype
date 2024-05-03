@@ -1,9 +1,74 @@
 if (!localStorage.getItem('pt'))
 {
     localStorage.setItem("pt", "[]")
-    
-    
+   
 }
+
+let ws;
+        
+function connectWebSocket() {
+const serverUrl = 'wss://socketsender.onrender.com';
+const clientName = 'AppleWatch';
+ws = new WebSocket(serverUrl);
+   
+ws.addEventListener('open', function (event) {
+        ws.send((JSON.stringify({ type: 'name', data: clientName })))
+try {        
+document.getElementById('final').textContent = 'Connection established';
+}
+    catch {
+    console.log('not correct page')
+    }
+
+});
+ws.addEventListener('close', function (event) {
+    try {
+        document.getElementById('final').textContent = 'Connection closed';
+    }
+    catch {
+    console.log('nah')
+    }
+      });
+
+// listen for messages from the server
+ws.addEventListener('message', (event) => {
+  console.log('got milk')
+});}
+connectWebSocket();
+function makeSimplePostRequest(url, data) {
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json', // Adjust the content type if sending a different data format
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .catch(error => {
+    throw new Error(`POST request failed: ${error.message}`);
+  });
+}
+
+const url = 'https://socketsender.onrender.com';
+// send a message to the server
+function reconnectWebSocket() {
+    if (document.visibilityState === 'visible') {
+        if (!ws || ws.readyState === WebSocket.CLOSED) {
+            connectWebSocket();
+        }
+    }
+}
+
+// Page Visibility API to check page focus and reconnect WebSocket
+document.addEventListener('visibilitychange', () => {
+    reconnectWebSocket();
+});
+
 var personsArray = JSON.parse(localStorage.getItem('pt'))
 class Exercise {
     constructor(name, type, duration, weight, color, sets, reps, bouts, seconds) {

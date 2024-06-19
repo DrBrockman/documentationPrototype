@@ -68,7 +68,9 @@ function reconnectWebSocket() {
 document.addEventListener('visibilitychange', () => {
     reconnectWebSocket();
 });
-
+window.addEventListener('focus', () => {
+    reconnectWebSocket();
+});
 var personsArray = JSON.parse(localStorage.getItem('pt'))
 class Exercise {
     constructor(name, type, duration, weight, color, sets, reps, bouts, seconds) {

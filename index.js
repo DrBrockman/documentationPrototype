@@ -24,6 +24,7 @@ document.getElementById('final').textContent = 'Connection established';
 ws.addEventListener('close', function (event) {
     try {
         document.getElementById('final').textContent = 'Connection closed';
+         reconnectWebSocket();
     }
     catch {
     console.log('nah')

@@ -73,7 +73,10 @@ data = {type : 'textToPaste', content : datasend}
 ws.send((JSON.stringify(data)))
   datasend = document.querySelector("#messagef").value=''
 });
-
+document.getElementById('messagef').addEventListener('focus', function() {
+    
+    reconnectWebSocket();});
+	    
 document.getElementById('messagef').addEventListener("keypress", function(event) {
     if (event.keyCode === 13) {
         event.preventDefault(); 
